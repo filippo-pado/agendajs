@@ -1,14 +1,21 @@
 {
   "name": "agendajs",
   "version": "0.0.1",
-  "description": "Agenda",
-  "main": "server.js",
-  "author": "Filippo",
-  "dependencies": {
-    "express": "~4.15.2"
-  },
+  "description": "Agenda js",
   "engines": {
-    "node": "4.4.7",
-    "npm": "2.15.8"
-  }
+    "node": "5.9.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "ejs": "2.4.1",
+    "express": "4.13.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/filippo-pado/agendajs"
+  },
+  "license": "MIT"
 }
