@@ -21,12 +21,12 @@ describe('Tasks', () => {
 /*
   * Test the /GET route
   */
-  describe('/GET tasks', () => {
+	describe('/GET tasks', () => {
       it('it should GET all the tasks', (done) => {
         chai.request(server)
-            .get('/tasks')
+            .get('/api/tasks')
             .end((err, res) => {
-                res.should.have.status(500);
+                res.should.have.status(200);
                 res.body.should.be.a('array');
                 res.body.length.should.be.eql(0);
               done();
