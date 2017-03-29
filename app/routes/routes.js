@@ -1,5 +1,7 @@
+'use strict';
 module.exports = function(app) {
 	var express  = require('express'), apiRoutes = express.Router();
+	require('./task.routes.js')(apiRoutes);
 	
 	app.use('/api', apiRoutes);
 
