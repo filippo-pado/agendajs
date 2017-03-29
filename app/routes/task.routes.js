@@ -18,7 +18,8 @@ module.exports = function(apiRoutes) {
 			description : req.body.description,
 			frequency : req.body.frequency,
 			taskDate : req.body.taskDate,
-			priority : req.body.priority			
+			priority : req.body.priority,
+			done: req.body.done,
 	    }, function(err, task) {
 			if (err){
 				res.status(500).send(err);

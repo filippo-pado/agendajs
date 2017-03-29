@@ -24,8 +24,8 @@ var taskSchema = new Schema({
 	},
 	done: {
 		type : Boolean,
-		default: false
-    }
+		default: 0
+	}
 }, {
       collection : 'tasks'
 	}
