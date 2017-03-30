@@ -1,6 +1,5 @@
 'use strict';
-process.env.NODE_ENV = 'test'; //adjust config file
-
+process.env.NODE_ENV = 'test'; //disable morgan console output
 let Task = require('../app/models/task');
 
 //Require the dev-dependencies
@@ -20,7 +19,7 @@ describe('Tasks', () => {
   /*
   * Test the /GET route
   */
-  describe('/GET tasks', () => {
+  describe('/GET /POST tasks', () => {
     it('it should GET all the tasks', (done) => {
       chai.request(server)
           .get('/api/tasks')
@@ -31,9 +30,7 @@ describe('Tasks', () => {
             done();
           });
     });
-  });
-  describe('/POST tasks', () => {
-    it('it should not POST a task without description field', (done) => {
+	it('it should not POST a task without description field', (done) => {
       let task = {
           owner: "John"          
       };
@@ -87,8 +84,50 @@ describe('Tasks', () => {
               assert.equal(res.status, 200);
               task.taskDate=res.body.taskDate; //format issue, skip check
               assert.deepEqual(task, {owner: res.body.owner, description: res.body.description, frequency: res.body.frequency, taskDate: res.body.taskDate, priority: res.body.priority, done: res.body.done});
-          done();
+			  done();
           });
+    });
+  });
+  describe('/GET /PUT/ DELETE tasks/task_id', () => {
+    it('it should GET a task by id', (done) => {
+		Task.create({owner: "John", description: "Buy cookies"}, function (err, task){
+            chai.request(server)
+            .get('/api/tasks/' + task.id)
+            .end((err, res) => {
+              let today = (new Date()).toISOString().substring(0, 10);
+              assert.equal(res.status, 200);
+              assert.equal(res.body.owner, 'John');
+              assert.include(res.body.taskDate, today);
+              done();
+            });
+        });
+    });
+    it('it should PUT a task updating the given task', (done) => {
+		Task.create({owner: 'John', description: 'Buy cookies', taskDate: '2017/03/30'}, function (err, task){
+            chai.request(server)
+            .put('/api/tasks/' + task.id)
+			.send({description: 'Do not buy cookies', taskDate: '2017/03/29'})
+            .end((err, res) => {
+              assert.equal(res.status, 200);
+              assert.equal(res.body.description, 'Buy cookies');
+			  assert.include(res.body.taskDate, '2017-03-29');
+              done();
+            });
+        });
+	});
+    it('it should DELETE a task with specified id', (done) => {
+      Task.create({owner: 'John', description: 'Buy cookies', taskDate: '2017/03/30'}, function (err, task){
+            chai.request(server)
+            .delete('/api/tasks/' + task.id)
+			.end((err, res) => {
+                assert.equal(res.status, 200);
+				assert.isObject(res.body);
+				console.log(JSON.stringify(res.body, null, 2));
+				assert.equal(res.body.result.ok, 1);
+				assert.equal(res.body.result.n, 1);
+                done();
+            });
+        });
     });
   });
 });
