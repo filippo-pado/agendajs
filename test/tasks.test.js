@@ -6,128 +6,151 @@ let Task = require('../app/models/task');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../server');
-let assert=chai.assert;
+let assert = chai.assert;
 chai.use(chaiHttp);
 
 //Our parent block
 describe('Tasks', () => {
-  beforeEach((done) => { //Before each test we empty the database
-      Task.remove({}, () => { 
-         done();         
-      });     
-  });
-  /*
-  * Test the /GET route
-  */
-  describe('/GET /POST tasks', () => {
-    it('it should GET all the tasks', (done) => {
-      chai.request(server)
-          .get('/api/tasks')
-          .end((err, res) => {
-              assert.equal(res.status, 200);
-              assert.isArray(res.body);
-              assert.equal(res.body.length, 0);
+    beforeEach((done) => { //Before each test we empty the database
+        Task.remove({}, () => {
             done();
-          });
+        });
     });
-	it('it should not POST a task without description field', (done) => {
-      let task = {
-          owner: "John"          
-      };
-      chai.request(server)
-          .post('/api/tasks')
-          .send(task)
-          .end((err, res) => {
-              assert(res.status===500);
-              assert.isObject(res.body);
-              assert.isDefined(res.body.errors);
-              assert.isDefined(res.body.errors.description);
-              assert.equal(res.body.errors.description.kind, 'required');
-            done();
-          });
-    });
-    it('it should POST a task with default fields', (done) => {
-      let task = {
-          owner: "John",
-          description: "Buy cookies"
-      };
-      chai.request(server)
-          .post('/api/tasks')
-          .send(task)
-          .end((err, res) => {
-              let today = (new Date()).toISOString().substring(0, 10);
-              assert.equal(res.status, 200);
-              assert.isObject(res.body);
-              assert.equal(res.body.owner, 'John');
-              assert.equal(res.body.description, 'Buy cookies');
-              assert.equal(res.body.frequency, 'once');
-              assert.include(res.body.taskDate, today);
-              assert.equal(res.body.priority, '2');
-              assert.isFalse(res.body.done);
-            done();
-          });
-    });
-    it('it should POST a task with specified fields', (done) => {
-      let today = (new Date()).toISOString().substring(0, 10);
-      let task = {
-          owner: "John",
-          description: "Buy a lot of cookies",
-          frequency: 'weekly',
-          taskDate: today,          
-          done: true,
-          priority: 1
-      };
-      chai.request(server)
-          .post('/api/tasks')
-          .send(task)
-          .end((err, res) => {
-              assert.equal(res.status, 200);
-              task.taskDate=res.body.taskDate; //format issue, skip check
-              assert.deepEqual(task, {owner: res.body.owner, description: res.body.description, frequency: res.body.frequency, taskDate: res.body.taskDate, priority: res.body.priority, done: res.body.done});
-			  done();
-          });
-    });
-  });
-  describe('/GET /PUT/ DELETE tasks/task_id', () => {
-    it('it should GET a task by id', (done) => {
-		Task.create({owner: "John", description: "Buy cookies"}, function (err, task){
+    describe('/GET /POST tasks', () => {
+        it('it should GET all the tasks', (done) => {
             chai.request(server)
-            .get('/api/tasks/' + task.id)
-            .end((err, res) => {
-              let today = (new Date()).toISOString().substring(0, 10);
-              assert.equal(res.status, 200);
-              assert.equal(res.body.owner, 'John');
-              assert.include(res.body.taskDate, today);
-              done();
+                .get('/api/tasks')
+                .end((err, res) => {
+
+                    assert.equal(res.status, 200);
+                    assert.isArray(res.body);
+                    assert.equal(res.body.length, 0);
+                    done();
+                });
+        });
+        it('it should not POST a task without description field', (done) => {
+            let task = {
+                owner: "John"
+            };
+            chai.request(server)
+                .post('/api/tasks')
+                .send(task)
+                .end((err, res) => {
+                    assert(res.status === 500);
+                    assert.isObject(res.body);
+                    assert.isDefined(res.body.errors);
+                    assert.isDefined(res.body.errors.description);
+                    assert.equal(res.body.errors.description.kind, 'required');
+                    done();
+                });
+        });
+        it('it should POST a task with default fields', (done) => {
+            let task = {
+                owner: "John",
+                description: "Buy cookies"
+            };
+            chai.request(server)
+                .post('/api/tasks')
+                .send(task)
+                .end((err, res) => {
+                    let today = (new Date()).toISOString().substring(0, 10);
+                    assert.equal(res.status, 200);
+                    assert.isObject(res.body);
+                    assert.equal(res.body.owner, 'John');
+                    assert.equal(res.body.description, 'Buy cookies');
+                    assert.equal(res.body.frequency, 'once');
+                    assert.include(res.body.taskDate, today);
+                    assert.equal(res.body.priority, '2');
+                    assert.isFalse(res.body.done);
+                    done();
+                });
+        });
+        it('it should POST a task with specified fields', (done) => {
+            let today = (new Date()).toISOString().substring(0, 10);
+            let task = {
+                owner: "John",
+                description: "Buy a lot of cookies",
+                frequency: 'weekly',
+                taskDate: today,
+                done: true,
+                priority: 1
+            };
+            chai.request(server)
+                .post('/api/tasks')
+                .send(task)
+                .end((err, res) => {
+                    assert.equal(res.status, 200);
+                    task.taskDate = res.body.taskDate; //format issue, skip check
+                    assert.deepEqual(task, {
+                        owner: res.body.owner,
+                        description: res.body.description,
+                        frequency: res.body.frequency,
+                        taskDate: res.body.taskDate,
+                        priority: res.body.priority,
+                        done: res.body.done
+                    });
+                    done();
+                });
+        });
+    });
+    describe('/GET /PUT/ DELETE tasks/task_id', () => {
+        it('it should GET a task by id', (done) => {
+            Task.create({
+                owner: "John",
+                description: "Buy cookies"
+            }, function(err, task) {
+                chai.request(server)
+                    .get('/api/tasks/' + task.id)
+                    .end((err, res) => {
+                        let today = (new Date()).toISOString().substring(0, 10);
+                        assert.equal(res.status, 200);
+                        assert.equal(res.body.owner, 'John');
+                        assert.include(res.body.taskDate, today);
+                        done();
+                    });
+            });
+        });
+        it('it should PUT a task updating the given task', (done) => {
+            Task.create({
+                owner: 'John',
+                description: 'Buy cookies',
+                taskDate: '2017/03/30'
+            }, function(err, task) {
+                chai.request(server)
+                    .put('/api/tasks/' + task.id)
+                    .send({
+                        description: 'Do not buy cookies',
+                        taskDate: '2017/03/29'
+                    })
+                    .end((err, res) => {
+                        assert.equal(res.status, 200);
+                        assert.equal(res.body.owner, 'John');
+                        assert.equal(res.body.description, 'Buy cookies');
+                        assert.include(res.body.taskDate, '2017-03-29');
+                        assert.equal(res.body.priority, 2);
+                        done();
+                    });
+            });
+        });
+        it('it should DELETE a task with specified id', (done) => {
+            Task.create({
+                owner: 'John',
+                description: 'Buy cookies',
+                taskDate: '2017/03/30'
+            }, function(err, task) {
+                chai.request(server)
+                    .delete('/api/tasks/' + task.id)
+                    .end((err, res) => {
+                        assert.equal(res.status, 200);
+                        chai.request(server)
+                            .get('/api/tasks')
+                            .end((err, res) => {
+                                assert.equal(res.body.length, 0);
+                                done();
+                            });
+
+                    });
             });
         });
     });
-    it('it should PUT a task updating the given task', (done) => {
-		Task.create({owner: 'John', description: 'Buy cookies', taskDate: '2017/03/30'}, function (err, task){
-            chai.request(server)
-            .put('/api/tasks/' + task.id)
-			.send({description: 'Do not buy cookies', taskDate: '2017/03/29'})
-            .end((err, res) => {
-              assert.equal(res.status, 200);
-              assert.equal(res.body.description, 'Buy cookies');
-			  assert.include(res.body.taskDate, '2017-03-29');
-              done();
-            });
-        });
-	});
-    it('it should DELETE a task with specified id', (done) => {
-      Task.create({owner: 'John', description: 'Buy cookies', taskDate: '2017/03/30'}, function (err, task){
-            chai.request(server)
-            .delete('/api/tasks/' + task.id)
-			.end((err, res) => {
-                assert.equal(res.status, 200);
-				assert.isObject(res.body);
-				console.log(JSON.stringify(res.body, null, 2));
-				assert.equal(res.body.result.ok, 1);
-				assert.equal(res.body.result.n, 1);
-                done();
-            });
-        });
-    });
-  });
 });
