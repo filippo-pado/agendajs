@@ -25,9 +25,9 @@ var taskSchema = new Schema({
         enum: [1, 2, 3],
         default: 2
     },
-    done: {
-        type: Boolean,
-        default: 0
+    doneDate: {
+        type: Date,
+        default: null
     }
 }, {
     collection: 'tasks'

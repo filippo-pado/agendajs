@@ -21,7 +21,6 @@ describe('Tasks', () => {
             chai.request(server)
                 .get('/api/tasks')
                 .end((err, res) => {
-
                     assert.equal(res.status, 200);
                     assert.isArray(res.body);
                     assert.equal(res.body.length, 0);
@@ -61,7 +60,7 @@ describe('Tasks', () => {
                     assert.equal(res.body.frequency, 'once');
                     assert.include(res.body.taskDate, today);
                     assert.equal(res.body.priority, '2');
-                    assert.isFalse(res.body.done);
+                    assert.isNull(res.body.doneDate);
                     done();
                 });
         });
@@ -72,7 +71,7 @@ describe('Tasks', () => {
                 description: "Buy a lot of cookies",
                 frequency: 'weekly',
                 taskDate: today,
-                done: true,
+                doneDate: '2017-03-20',
                 priority: 1
             };
             chai.request(server)
@@ -80,15 +79,12 @@ describe('Tasks', () => {
                 .send(task)
                 .end((err, res) => {
                     assert.equal(res.status, 200);
-                    task.taskDate = res.body.taskDate; //format issue, skip check
-                    assert.deepEqual(task, {
-                        owner: res.body.owner,
-                        description: res.body.description,
-                        frequency: res.body.frequency,
-                        taskDate: res.body.taskDate,
-                        priority: res.body.priority,
-                        done: res.body.done
-                    });
+                    assert.equal(res.body.owner, task.owner);
+					assert.equal(res.body.description, task.description);
+					assert.equal(res.body.frequency, task.frequency);
+					assert.include(res.body.taskDate, task.taskDate);
+					assert.equal(res.body.priority, task.priority);
+					assert.include(res.body.doneDate, task.doneDate);
                     done();
                 });
         });
