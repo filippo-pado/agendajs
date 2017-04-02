@@ -13,7 +13,7 @@ mongoose.connect(database.url, function(err) {
     if (err) return console.error(err);
 });
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/dist'));
 if (process.env.NODE_ENV !== 'test') {
     app.use(morgan('combined')); //use morgan to log at command line 'combined' outputs the Apache style LOGs
 }
