@@ -1,7 +1,7 @@
 {
   "project": {
-    "version": "1.0.0-beta.28.3",
-    "name": "mean-contactlist-angular2"
+    "version": "1.0.0",
+    "name": "agendajs"
   },
   "apps": [
     {
@@ -28,27 +28,7 @@
         "prod": "environments/environment.prod.ts"
       }
     }
-  ],
-  "e2e": {
-    "protractor": {
-      "config": "./protractor.conf.js"
-    }
-  },
-  "lint": [
-    {
-      "files": "src/**/*.ts",
-      "project": "src/tsconfig.json"
-    },
-    {
-      "files": "e2e/**/*.ts",
-      "project": "e2e/tsconfig.json"
-    }
-  ],
-  "test": {
-    "karma": {
-      "config": "./karma.conf.js"
-    }
-  },
+  ],  
   "defaults": {
     "styleExt": "css",
     "prefixInterfaces": false,
