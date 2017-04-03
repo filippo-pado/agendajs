@@ -22,7 +22,7 @@ if (process.env.NODE_ENV !== 'test') {
 require('./app/routes/routes')(app);
 
 // start ==========================================================
-var port = process.env.PORT || 6000;
+var port = process.env.PORT || 5000;
 app.listen(port);
 console.log("App listening on port " + port);
 

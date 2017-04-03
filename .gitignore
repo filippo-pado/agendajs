@@ -10,3 +10,6 @@
 # enviroment
 .env
 .jshintrc
+
+# debug
+npm-debug.log

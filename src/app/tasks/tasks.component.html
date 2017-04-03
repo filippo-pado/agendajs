@@ -8,12 +8,18 @@
         <input type="radio" [(ngModel)]="frequency" name="frequency" value="weekly">Settimana
         <br>
         <input type="radio" [(ngModel)]="frequency" name="frequency" value="monthly">Mese
-    </form>
-    <span>{{buildTool}}</span>
+    </form>	
+    <span>Frequenza: {{frequency}}</span>	
 </div>
 <div>
-    <label>Descrizione:</label>
-    <input #taskDescription />
+    <label>Descrizione</label>
+	<input #taskDescription />
+	<label>Frequenza</label>
+    <input #taskFrequency />
+	<label>Priorità:</label>
+    <input #taskPriority />
+	<label>Giorno:</label>
+    <input #taskDate />
     <button (click)="add();">
         Add
     </button>
