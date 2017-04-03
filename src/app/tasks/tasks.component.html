@@ -1,0 +1,29 @@
+<h2>Impegni</h2>
+<div>
+    <form action="">
+        <input type="radio" [(ngModel)]="frequency" name="frequency" value="once">Una tantum
+        <br>
+        <input type="radio" [(ngModel)]="frequency" name="frequency" value="daily">Giorno
+        <br>
+        <input type="radio" [(ngModel)]="frequency" name="frequency" value="weekly">Settimana
+        <br>
+        <input type="radio" [(ngModel)]="frequency" name="frequency" value="monthly">Mese
+    </form>
+    <span>{{buildTool}}</span>
+</div>
+<div>
+    <label>Descrizione:</label>
+    <input #taskDescription />
+    <button (click)="add();">
+        Add
+    </button>
+</div>
+<ul class="tasks">
+    <li *ngFor="let task of tasks" (click)="onSelect(task)" [class.selected]="hero === selectedHero">
+        <!--<span class="badge">{{task._id}}</span>-->
+        <span>{{task.description}}</span>
+        <span>{{task.frequency}}</span>
+        <span>{{task.taskDate}}</span>
+        <span>{{task.priority}}</span><span>{{task.doneDate}}</span>
+    </li>
+</ul>
