@@ -1,35 +1,49 @@
-<h2>Impegni</h2>
-<div>
-    <form action="">
-        <input type="radio" [(ngModel)]="frequency" name="frequency" value="once">Una tantum
-        <br>
-        <input type="radio" [(ngModel)]="frequency" name="frequency" value="daily">Giorno
-        <br>
-        <input type="radio" [(ngModel)]="frequency" name="frequency" value="weekly">Settimana
-        <br>
-        <input type="radio" [(ngModel)]="frequency" name="frequency" value="monthly">Mese
-    </form>	
-    <span>Frequenza: {{frequency}}</span>	
-</div>
-<div>
-    <label>Descrizione</label>
-	<input #taskDescription />
-	<label>Frequenza</label>
-    <input #taskFrequency />
-	<label>Priorità:</label>
-    <input #taskPriority />
-	<label>Giorno:</label>
-    <input #taskDate />
-    <button (click)="add();">
-        Add
-    </button>
-</div>
-<ul class="tasks">
-    <li *ngFor="let task of tasks" (click)="onSelect(task)" [class.selected]="hero === selectedHero">
-        <!--<span class="badge">{{task._id}}</span>-->
-        <span>{{task.description}}</span>
-        <span>{{task.frequency}}</span>
-        <span>{{task.taskDate}}</span>
-        <span>{{task.priority}}</span><span>{{task.doneDate}}</span>
-    </li>
-</ul>
+<md-card>
+    <md-card-header>
+        <md-card-title>
+            <h2>Nuovo impegno</h2>
+        </md-card-title>
+    </md-card-header>
+    <md-card-content>
+        <md-grid-list cols="3" rowHeight="70px">
+            <md-grid-tile colspan="2">
+                <md-input-container class='full-width'>
+                    <input mdInput placeholder='Descrizione'>
+                </md-input-container>
+            </md-grid-tile>
+            <md-grid-tile>
+                <md-input-container>
+                    <input type='date' mdInput placeholder='Data'>
+                </md-input-container>
+            </md-grid-tile>
+            <md-grid-tile>
+                <md-select placeholder="Cadenza" [(ngModel)]="frequency" name="frequency">
+                    <md-option *ngFor="let freq of frequencyList" [value]="freq.value">
+                        {{freq.viewValue}}
+                    </md-option>
+                </md-select>
+            </md-grid-tile>
+            <md-grid-tile>
+                <span>Priorità</span>
+                <md-slider [max]="prioritySlider.max" [min]="prioritySlider.min" [step]="prioritySlider.step" [value]="priority" thumbLabel tick-interval>
+                </md-slider>
+            </md-grid-tile>
+            <md-grid-tile>
+                <button md-fab (click)='add()'>
+                    <md-icon>note_add</md-icon>
+                </button>
+            </md-grid-tile>
+        </md-grid-list>
+    </md-card-content>
+</md-card>
+<md-card>
+    <ul class='tasks '>
+        <li *ngFor='let task of tasks ' (click)='onSelect(task) ' [class.selected]='hero===selectedHero '>
+            <!--<span class="badge ">{{task._id}}</span>-->
+            <span>{{task.description}}</span>
+            <span>{{task.frequency}}</span>
+            <span>{{task.taskDate}}</span>
+            <span>{{task.priority}}</span><span>{{task.doneDate}}</span>
+        </li>
+    </ul>
+</md-card>

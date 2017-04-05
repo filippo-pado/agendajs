@@ -12,7 +12,21 @@ import { TaskService } from './task.service';
 export class TasksComponent implements OnInit {
     tasks: Task[];
     selectedTask: Task;
-    frequency: string;
+    frequency: string = 'once';
+    priority: number = 2;
+
+    prioritySlider = {
+        max: 3,
+        min: 1,
+        step: 1
+    };
+
+    frequencyList = [
+        { value: 'once', viewValue: 'Una tantum' },
+        { value: 'daily', viewValue: 'Giornaliero' },
+        { value: 'weekly', viewValue: 'Settimanale' },
+        { value: 'monthly', viewValue: 'Mensile' }
+    ];
 
     constructor(
         private taskService: TaskService,

@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -18,7 +19,8 @@ import { TaskService } from './tasks/task.service';
         BrowserModule,
         FormsModule,
         HttpModule,
-        MaterialModule
+        MaterialModule,
+        BrowserAnimationsModule
     ],
     providers: [TaskService],
     bootstrap: [AppComponent]
