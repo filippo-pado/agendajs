@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { DatepickerModule } from 'angular2-material-datepicker'
 
 import { AppComponent } from './app.component';
 import { TasksComponent } from './tasks/tasks.component';
@@ -20,7 +22,9 @@ import { TaskService } from './tasks/task.service';
         FormsModule,
         HttpModule,
         MaterialModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        DatepickerModule
     ],
     providers: [TaskService],
     bootstrap: [AppComponent]

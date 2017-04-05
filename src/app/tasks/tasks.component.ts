@@ -14,6 +14,8 @@ export class TasksComponent implements OnInit {
     selectedTask: Task;
     frequency: string = 'once';
     priority: number = 2;
+    taskDate: Date = new Date();
+
 
     prioritySlider = {
         max: 3,
