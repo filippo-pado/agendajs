@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 //import { Router } from '@angular/router';
 
-import { Task } from './task';
+import { Task, orderTasksBy } from './task';
 import { TaskService } from './task.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class TasksComponent implements OnInit {
     frequency: string = 'once';
     priority: number = 2;
     taskDate: Date = new Date();
-
+    orderField = 'description';
 
     prioritySlider = {
         max: 3,
@@ -38,7 +38,7 @@ export class TasksComponent implements OnInit {
     getTasks(): void {
         this.taskService
             .getTasks()
-            .then(tasks => this.tasks = tasks);
+            .then(tasks => this.tasks = tasks.sort(orderTasksBy('-description')))
     };
 
     add(): void {
