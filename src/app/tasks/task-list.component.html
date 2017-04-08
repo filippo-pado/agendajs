@@ -1,0 +1,16 @@
+<task-detail [task]="selectedTask" [createHandler]="createTask" [updateHandler]="updateTask" [deleteHandler]="deleteTask">
+</task-detail>
+<md-card>
+    <md-card-content>
+        <md-list>
+            <md-list-item *ngFor='let task of tasks' (click)="selectTask(task)" [class.active]="task === selectedTask">
+                <md-icon md-list-icon>priority_high</md-icon>
+                <h2 md-line>{{task.description}}</h2>
+                <p md-line>
+                    <span> {{task.taskDate | date:'yyyy-MM-dd'}} </span>
+                    <span> -- {{task.frequency}} </span>
+                </p>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>

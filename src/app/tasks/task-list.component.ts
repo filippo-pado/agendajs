@@ -5,30 +5,14 @@ import { Task, orderTasksBy } from './task';
 import { TaskService } from './task.service';
 
 @Component({
-    selector: 'my-tasks',
-    templateUrl: './tasks.component.html',
-    styleUrls: ['./tasks.component.css']
+    selector: 'task-list',
+    templateUrl: './task-list.component.html',
+    styleUrls: ['./task-list.component.css']
 })
-export class TasksComponent implements OnInit {
+export class TaskListComponent implements OnInit {
     tasks: Task[];
-    selectedTask: Task;
-    frequency: string = 'once';
-    priority: number = 2;
-    taskDate: Date = new Date();
+    selectedTask: Task;    
     orderField = 'description';
-
-    prioritySlider = {
-        max: 3,
-        min: 1,
-        step: 1
-    };
-
-    frequencyList = [
-        { value: 'once', viewValue: 'Una tantum' },
-        { value: 'daily', viewValue: 'Giornaliero' },
-        { value: 'weekly', viewValue: 'Settimanale' },
-        { value: 'monthly', viewValue: 'Mensile' }
-    ];
 
     constructor(
         private taskService: TaskService,
@@ -38,20 +22,20 @@ export class TasksComponent implements OnInit {
     getTasks(): void {
         this.taskService
             .getTasks()
-            .then(tasks => this.tasks = tasks.sort(orderTasksBy('-description')))
+            .then(tasks => this.tasks = tasks.sort(orderTasksBy('description')))
     };
 
-    add(): void {
-        //input fields
+    createTask(): void { //Pass task
+        //input fields //TODO
         let task = { owner: 'John', description: 'Test angular', };
         this.taskService.create(task)
             .then(task => {
                 this.tasks.push(task);
-                this.selectedTask = null;
+                //this.selectedTask = task; //TODO
             });
     };
 
-    delete(task: Task): void {
+    deleteTask(task: Task): void {
         this.taskService
             .delete(task._id)
             .then(() => {
@@ -59,15 +43,20 @@ export class TasksComponent implements OnInit {
                 if (this.selectedTask === task) { this.selectedTask = null; }
             });
     };
+	updateTask(task: Task): void {
+        /*this.taskService
+            .delete(task._id)
+            .then(() => {
+                this.tasks = this.tasks.filter(t => t !== task);
+                if (this.selectedTask === task) { this.selectedTask = null; }
+            });*/
+		//TODO
+    };
 
     ngOnInit(): void {
         this.getTasks();
     };
-    onSelect(task: Task): void {
+    selectTask(task: Task): void {
         this.selectedTask = task;
     };
-
-    /* gotoDetail(): void {
-          this.router.navigate(['/detail', this.selectedHero.id]);
-      }*/
 }

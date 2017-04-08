@@ -1,4 +1,4 @@
-<md-card>
+<md-card *ngIf="task">
     <md-card-header>
         <md-card-title>
             <h2>Nuovo impegno</h2>
@@ -8,13 +8,13 @@
         <div fxLayout fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="15px">
             <div fxLayout fxLayout.xs="column" fxLayoutAlign="space-around end" fxLayoutAlign.xs="space-around center" fxLayoutGap="20px" fxFlex="70%">
                 <md-input-container fxFlex="80%">
-                    <input mdInput placeholder='Descrizione'>
+                    <input mdInput placeholder='Descrizione' [(ngModel)]="task.description">
                 </md-input-container>
                 <div fxLayout="column" fxLayoutAlign="end center">
                     <label>Priorità</label>
                     <div fxLayout="row" fxLayoutAlign="space-around center">
                         <md-icon>snooze</md-icon>
-                        <md-slider fxFlex="20%" [max]="prioritySlider.max" [min]="prioritySlider.min" [step]="prioritySlider.step" [value]="priority" thumbLabel tick-interval></md-slider>
+                        <md-slider fxFlex="20%" [max]="prioritySlider.max" [min]="prioritySlider.min" [step]="prioritySlider.step" [value]="task.priority" thumbLabel tick-interval></md-slider>
                         <md-icon>priority_high</md-icon>
                     </div>
                 </div>
@@ -22,9 +22,10 @@
             <div fxLayout fxLayout.xs="column" fxLayoutAlign="space-around end" fxLayoutAlign.xs="space-around center" fxLayoutGap="20px">
                 <div fxLayout="column" fxLayoutAlign="space-around" class="em-margin-bottom">
                     <label>Data impegno</label>
-                    <material-datepicker [(date)]="taskDate"></material-datepicker>
+                    <!--<material-datepicker [(date)]="task.taskDate"></material-datepicker>-->
+					<material-datepicker></material-datepicker>
                 </div>
-                <md-select class="em-margin-bottom" placeholder="Cadenza" [(ngModel)]="frequency" name="frequency">
+                <md-select class="em-margin-bottom" placeholder="Cadenza" [(ngModel)]="task.frequency" name="frequency">
                     <md-option *ngFor="let freq of frequencyList" [value]="freq.value">
                         {{freq.viewValue}}
                     </md-option>
@@ -34,19 +35,5 @@
                 </button>
             </div>
         </div>
-    </md-card-content>
-</md-card>
-<md-card>
-    <md-card-content>
-        <md-list>
-            <md-list-item *ngFor='let task of tasks'>
-                <md-icon md-list-icon>priority_high</md-icon>
-                <h3 md-line>{{task.description}}</h3>
-                <p md-line>
-                    <span> {{task.taskDate | date:'yyyy-MM-dd'}} </span>
-                    <span> -- {{task.frequency}} </span>
-                </p>
-            </md-list-item>
-        </md-list>
     </md-card-content>
 </md-card>

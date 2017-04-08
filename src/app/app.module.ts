@@ -8,14 +8,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DatepickerModule } from 'angular2-material-datepicker'
 
 import { AppComponent } from './app.component';
-import { TasksComponent } from './tasks/tasks.component';
+import { TaskListComponent } from './tasks/task-list.component';
+import { TaskDetailComponent } from './tasks/task-detail.component';
 
 import { TaskService } from './tasks/task.service';
 
 @NgModule({
     declarations: [
         AppComponent,
-        TasksComponent
+        TaskListComponent,
+		TaskDetailComponent
     ],
     imports: [
         BrowserModule,
