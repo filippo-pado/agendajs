@@ -21,7 +21,7 @@ export class TaskDetailComponent{
     /*frequency: string = 'once';
     priority: number = 2;
     taskDate: Date = new Date();*/
-    
+    	
     prioritySlider = {
         max: 3,
         min: 1,

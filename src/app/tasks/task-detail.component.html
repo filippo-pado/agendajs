@@ -21,9 +21,8 @@
             </div>
             <div fxLayout fxLayout.xs="column" fxLayoutAlign="space-around end" fxLayoutAlign.xs="space-around center" fxLayoutGap="20px">
                 <div fxLayout="column" fxLayoutAlign="space-around" class="em-margin-bottom">
-                    <label>Data impegno</label>
-                    <!--<material-datepicker [(date)]="task.taskDate"></material-datepicker>-->
-					<material-datepicker></material-datepicker>
+                    <label>Data impegno:</label>
+                    <material-datepicker [(date)]="task.taskDate"></material-datepicker>
                 </div>
                 <md-select class="em-margin-bottom" placeholder="Cadenza" [(ngModel)]="task.frequency" name="frequency">
                     <md-option *ngFor="let freq of frequencyList" [value]="freq.value">

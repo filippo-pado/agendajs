@@ -19,10 +19,10 @@ export class TaskListComponent implements OnInit {
         //private router: Router
     ) {};
 
-    getTasks(): void {
+	getTasks(): void {
         this.taskService
-            .getTasks()
-            .then(tasks => this.tasks = tasks.sort(orderTasksBy('description')))
+            .getTasks()            
+			.then(tasks => this.tasks = tasks.map(this.parseDate).sort(orderTasksBy('description')) as Task[]);
     };
 
     createTask(): void { //Pass task
@@ -56,7 +56,13 @@ export class TaskListComponent implements OnInit {
     ngOnInit(): void {
         this.getTasks();
     };
-    selectTask(task: Task): void {
+    selectTask(task: Task): void {		
         this.selectedTask = task;
     };
+	
+	private parseDate(task): Task{
+		task['taskDate']=new Date(task['taskDate']);
+		task['doneDate']=new Date(task['doneDate']);
+		return task;
+	}
 }
