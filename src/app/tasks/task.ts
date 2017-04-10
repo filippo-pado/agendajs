@@ -6,6 +6,13 @@ export class Task {
     taskDate ? : Date;
     priority ? : number;
     doneDate ? : Date;
+    constructor(owner: string = 'nobody') {
+        this.owner = owner;
+        this.description = '';
+        this.frequency = 'once';
+        this.taskDate = new Date();
+        this.priority = 2;
+    }
 }
 
 export function orderTasksBy(property: string) {

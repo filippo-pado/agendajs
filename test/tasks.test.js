@@ -15,7 +15,7 @@ describe('Tasks', () => {
         /*Task.remove({}, () => {
             done();
         });*/
-		done();
+        done();
     });
     describe('/GET /POST tasks', () => {
         it('it should GET all the tasks', (done) => {
@@ -81,11 +81,11 @@ describe('Tasks', () => {
                 .end((err, res) => {
                     assert.equal(res.status, 200);
                     assert.equal(res.body.owner, task.owner);
-					assert.equal(res.body.description, task.description);
-					assert.equal(res.body.frequency, task.frequency);
-					assert.include(res.body.taskDate, task.taskDate);
-					assert.equal(res.body.priority, task.priority);
-					assert.include(res.body.doneDate, task.doneDate);
+                    assert.equal(res.body.description, task.description);
+                    assert.equal(res.body.frequency, task.frequency);
+                    assert.include(res.body.taskDate, task.taskDate);
+                    assert.equal(res.body.priority, task.priority);
+                    assert.include(res.body.doneDate, task.doneDate);
                     done();
                 });
         });
@@ -111,18 +111,18 @@ describe('Tasks', () => {
             Task.create({
                 owner: 'John',
                 description: 'Buy cookies',
-                taskDate: '2017/03/30'
+                taskDate: '2017-03-30'
             }, function(err, task) {
                 chai.request(server)
                     .put('/api/tasks/' + task.id)
                     .send({
                         description: 'Do not buy cookies',
-                        taskDate: '2017/03/29'
+                        taskDate: '2017-03-29'
                     })
                     .end((err, res) => {
                         assert.equal(res.status, 200);
                         assert.equal(res.body.owner, 'John');
-                        assert.equal(res.body.description, 'Buy cookies');
+                        assert.equal(res.body.description, 'Do not buy cookies');
                         assert.include(res.body.taskDate, '2017-03-29');
                         assert.equal(res.body.priority, 2);
                         done();

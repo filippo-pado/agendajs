@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-//import { Router } from '@angular/router';
+import { MdSnackBar } from '@angular/material';
 
 import { Task, orderTasksBy } from './task';
 import { TaskService } from './task.service';
@@ -11,11 +11,13 @@ import { TaskService } from './task.service';
 })
 export class TaskListComponent implements OnInit {
     tasks: Task[] = [];
-    selectedTask: Task = null;
+    selectedTask: Task = new Task();
     orderField: string = 'description';
+    actionToPerform: string = 'create';
 
     constructor(
-        private taskService: TaskService
+        private taskService: TaskService,
+        public messageBar: MdSnackBar
     ) {};
 
     ngOnInit(): void {
@@ -29,11 +31,16 @@ export class TaskListComponent implements OnInit {
     };
 
     createTask(task: Task): void {
-        this.taskService.create(task)
-            .then(tasky => {
-                this.tasks.push(task);
-                this.selectedTask = task;
-            });
+        if (task.description.trim() != '') {
+            this.taskService
+                .create(task)
+                .then(resTask => {
+                    this.tasks.push(resTask);
+                    this.selectedTask = new Task();
+                    this.actionToPerform = 'create';
+                    this.messageBar.open('Impegno creato!', 'OK', { duration: 2000 });
+                });
+        }
     };
 
     deleteTask(task: Task): void {
@@ -41,21 +48,37 @@ export class TaskListComponent implements OnInit {
             .delete(task._id)
             .then(() => {
                 this.tasks = this.tasks.filter(t => t !== task);
-                if (this.selectedTask === task) { this.selectedTask = null; }
+                if (this.selectedTask === task) { this.selectedTask = new Task(); }
+                this.messageBar.open('Impegno eliminato!', 'OK', { duration: 2000 });
             });
     };
     updateTask(task: Task): void {
-        /*this.taskService
-            .delete(task._id)
-            .then(() => {
-                this.tasks = this.tasks.filter(t => t !== task);
-                if (this.selectedTask === task) { this.selectedTask = null; }
-            });*/
-        //TODO
+        if (task.description.trim() != '') {
+            this.taskService
+                .update(task)
+                .then((resTask) => {
+                    let idx = this.getIndexOfTask(resTask._id);
+                    if (idx !== -1) {
+                        this.tasks[idx] = resTask;
+                    }
+                    this.selectedTask = new Task();
+                    this.actionToPerform = 'create';
+                    this.messageBar.open('Impegno modificato!', 'OK', { duration: 2000 });
+                });
+        }
     };
-    selectTask(task: Task): void {
+    editTask(task: Task): void {
         this.selectedTask = task;
+        this.actionToPerform = 'update';
     };
+    checkTask(task: Task): void {
+        console.log('TODO: check task ' + task.description);
+    }
+    private getIndexOfTask = (taskID: String) => {
+        return this.tasks.findIndex((task) => {
+            return task._id === taskID;
+        });
+    }
 
     private parseDate(task): Task {
         task['taskDate'] = new Date(task['taskDate']);

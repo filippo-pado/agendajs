@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Task, orderTasksBy } from './task';
 import { TaskService } from './task.service';
@@ -9,9 +9,10 @@ import { TaskListComponent } from './task-list.component';
     templateUrl: './task-detail.component.html',
     styleUrls: ['./task-detail.component.css']
 })
-export class TaskDetailComponent implements OnInit {
+export class TaskDetailComponent {
     @Input() task: Task;
     @Input() taskList: TaskListComponent;
+    @Input() actionToPerform: string;
 
     prioritySlider = {
         max: 3,
@@ -30,11 +31,7 @@ export class TaskDetailComponent implements OnInit {
         private taskService: TaskService,
     ) {};
 
-    ngOnInit(): void {
-        if (this.task === null) this.task = this.newTask();
-    };
-
-    createTask(): void {		
+    createTask(): void {
         this.taskList.createTask(this.task);
     }
 
@@ -44,14 +41,5 @@ export class TaskDetailComponent implements OnInit {
 
     deleteTask(): void {
         this.taskList.deleteTask(this.task);
-    }
-    private newTask(): Task {
-        return {
-            owner: 'John', //change with session value
-            description: '',
-            frequency: 'once',
-            taskDate: new Date(),
-            priority: 2
-        }
     }
 }

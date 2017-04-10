@@ -1,8 +1,9 @@
-<md-card *ngIf="task">  
+<md-card *ngIf="task">
     <md-card-content>
         <div fxLayout fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="15px">
             <div fxLayout fxLayout.xs="column" fxLayoutAlign="space-around end" fxLayoutAlign.xs="space-around center" fxLayoutGap="20px" fxFlex="70%">
-                <md-input-container fxFlex="80%">
+                <md-input-container fxFlex="80%"
+>
                     <input mdInput placeholder='Descrizione impegno' [(ngModel)]="task.description">
                 </md-input-container>
                 <div fxLayout="column" fxLayoutAlign="end center">
@@ -11,7 +12,6 @@
                         <md-icon>snooze</md-icon>
                         <md-slider [max]="prioritySlider.max" [min]="prioritySlider.min" [step]="prioritySlider.step" [(ngModel)]="task.priority" thumbLabel tick-interval></md-slider>
                         <md-icon>priority_high</md-icon>
-						{{task.priority}}
                     </div>
                 </div>
             </div>
@@ -25,8 +25,11 @@
                         {{freq.viewValue}}
                     </md-option>
                 </md-select>
-                <button class="em-margin-bottom" md-fab color='primary' (click)='createTask()'>
+                <button *ngIf='actionToPerform=="create"' class="em-margin-bottom" md-fab color='primary' (click)='createTask()'>
                     <md-icon>note_add</md-icon>
+                </button>
+                <button *ngIf='actionToPerform=="update"' class="em-margin-bottom" md-fab color='primary' (click)='updateTask()'>
+                    <md-icon>edit</md-icon>
                 </button>
             </div>
         </div>

@@ -28,7 +28,7 @@ module.exports = function(apiRoutes) {
         });
     });
     apiRoutes.put('/tasks/:task_id', function(req, res) {
-        Task.findByIdAndUpdate(req.params.task_id, req.body, function(err, task) {
+        Task.findByIdAndUpdate(req.params.task_id, req.body, { new: true }, function(err, task) {
             if (err) res.status(500).send(err);
             else res.json(task);
         });
