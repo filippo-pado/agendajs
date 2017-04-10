@@ -34,7 +34,7 @@ export class TaskDetailComponent implements OnInit {
         if (this.task === null) this.task = this.newTask();
     };
 
-    createTask(): void {
+    createTask(): void {		
         this.taskList.createTask(this.task);
     }
 

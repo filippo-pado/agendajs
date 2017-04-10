@@ -1,8 +1,13 @@
-<md-toolbar color="primary" class='mat-elevation-z6'>
-    <span>AgendaJS</span>
-</md-toolbar>
-<md-tab-group>
-    <md-tab label="Dashboard"></md-tab>
-    <md-tab label="Todo"></md-tab>
-</md-tab-group>
+<nav md-tab-nav-bar color='warn'>
+	<!--<a md-tab-link
+		 *ngFor="let link of navLinks"
+		 [routerLink]="link"
+		 routerLinkActive #rla="routerLinkActive"
+		 [active]="rla.isActive">
+		{{tabLink.label}}
+	</a>-->
+	<a md-tab-link >AgendaJS</a>
+	<a md-tab-link>Dashboard</a>
+	<a md-tab-link>Todo</a>
+</nav>
 <task-list></task-list>
