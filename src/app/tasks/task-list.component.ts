@@ -10,28 +10,29 @@ import { TaskService } from './task.service';
     styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-    tasks: Task[];
-    selectedTask: Task;    
-    orderField = 'description';
+    tasks: Task[] = [];
+    selectedTask: Task = null;
+    orderField: string = 'description';
 
     constructor(
-        private taskService: TaskService,
-        //private router: Router
+        private taskService: TaskService
     ) {};
 
-	getTasks(): void {
-        this.taskService
-            .getTasks()            
-			.then(tasks => this.tasks = tasks.map(this.parseDate).sort(orderTasksBy('description')) as Task[]);
+    ngOnInit(): void {
+        this.getTasks();
     };
 
-    createTask(): void { //Pass task
-        //input fields //TODO
-        let task = { owner: 'John', description: 'Test angular', };
+    getTasks(): void {
+        this.taskService
+            .getTasks()
+            .then(tasks => this.tasks = tasks.map(this.parseDate).sort(orderTasksBy('description')));
+    };
+
+    createTask(task: Task): void {
         this.taskService.create(task)
-            .then(task => {
+            .then(tasky => {
                 this.tasks.push(task);
-                //this.selectedTask = task; //TODO
+                this.selectedTask = task;
             });
     };
 
@@ -43,26 +44,22 @@ export class TaskListComponent implements OnInit {
                 if (this.selectedTask === task) { this.selectedTask = null; }
             });
     };
-	updateTask(task: Task): void {
+    updateTask(task: Task): void {
         /*this.taskService
             .delete(task._id)
             .then(() => {
                 this.tasks = this.tasks.filter(t => t !== task);
                 if (this.selectedTask === task) { this.selectedTask = null; }
             });*/
-		//TODO
+        //TODO
     };
-
-    ngOnInit(): void {
-        this.getTasks();
-    };
-    selectTask(task: Task): void {		
+    selectTask(task: Task): void {
         this.selectedTask = task;
     };
-	
-	private parseDate(task): Task{
-		task['taskDate']=new Date(task['taskDate']);
-		task['doneDate']=new Date(task['doneDate']);
-		return task;
-	}
+
+    private parseDate(task): Task {
+        task['taskDate'] = new Date(task['taskDate']);
+        task['doneDate'] = new Date(task['doneDate']);
+        return task;
+    }
 }

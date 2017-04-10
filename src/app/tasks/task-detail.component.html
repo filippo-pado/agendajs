@@ -14,7 +14,7 @@
                     <label>Priorità</label>
                     <div fxLayout="row" fxLayoutAlign="space-around center">
                         <md-icon>snooze</md-icon>
-                        <md-slider fxFlex="20%" [max]="prioritySlider.max" [min]="prioritySlider.min" [step]="prioritySlider.step" [value]="task.priority" thumbLabel tick-interval></md-slider>
+                        <md-slider [max]="prioritySlider.max" [min]="prioritySlider.min" [step]="prioritySlider.step" [value]="task.priority" thumbLabel tick-interval></md-slider>
                         <md-icon>priority_high</md-icon>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                         {{freq.viewValue}}
                     </md-option>
                 </md-select>
-                <button class="em-margin-bottom" md-fab (click)='add()'>
+                <button class="em-margin-bottom" md-fab (click)='createTask()'>
                     <md-icon>note_add</md-icon>
                 </button>
             </div>

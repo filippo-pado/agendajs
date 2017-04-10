@@ -1,27 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { Task, orderTasksBy } from './task';
 import { TaskService } from './task.service';
+import { TaskListComponent } from './task-list.component';
 
 @Component({
     selector: 'task-detail',
     templateUrl: './task-detail.component.html',
     styleUrls: ['./task-detail.component.css']
 })
-export class TaskDetailComponent{
-	@Input()
-	task: Task
-	@Input()
-	createHandler: Function;
-	@Input()
-	updateHandler: Function;
-	@Input()
-	deleteHandler: Function;	
-    
-    /*frequency: string = 'once';
-    priority: number = 2;
-    taskDate: Date = new Date();*/
-    	
+export class TaskDetailComponent implements OnInit {
+    @Input() task: Task;
+    @Input() taskList: TaskListComponent;
+
     prioritySlider = {
         max: 3,
         min: 1,
@@ -39,16 +30,28 @@ export class TaskDetailComponent{
         private taskService: TaskService,
     ) {};
 
-    createTask(task: Task) {
-		this.createHandler(task);
-	}
+    ngOnInit(): void {
+        if (this.task === null) this.task = this.newTask();
+    };
 
-	updateTask(task: Task): void {
-		this.updateHandler(task);
-	}
+    createTask(): void {
+        this.taskList.createTask(this.task);
+    }
 
-	deleteTask(task: Task): void {
-		this.deleteHandler(task);
-	}
-    
+    updateTask(): void {
+        this.taskList.updateTask(this.task);
+    }
+
+    deleteTask(): void {
+        this.taskList.deleteTask(this.task);
+    }
+    private newTask(): Task {
+        return {
+            owner: 'John', //change with session value
+            description: '',
+            frequency: 'once',
+            taskDate: new Date(),
+            priority: 2
+        }
+    }
 }
