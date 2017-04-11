@@ -6,6 +6,7 @@ export class Task {
     taskDate ? : Date;
     priority ? : number;
     doneDate ? : Date;
+    todo ? : boolean;
     constructor(owner: string = 'nobody') {
         this.owner = owner;
         this.description = '';

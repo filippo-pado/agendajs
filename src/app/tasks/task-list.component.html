@@ -13,13 +13,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor='let task of tasks'>
+                    <tr *ngFor='let task of tasks | callback: todoTasks'>
                         <td>
                             <md-icon *ngIf='task.priority==1'>snooze</md-icon>
                             <md-icon *ngIf='task.priority==2'>note</md-icon>
                             <md-icon *ngIf='task.priority==3'>priority_high</md-icon>
                         </td>
-                        <td class='description'>{{task.description}}</td>
+                        <td class='description'>{{task.todo}}-{{task.description}}</td>
                         <td>{{task.taskDate | date:'yyyy-MM-dd'}}</td>
                         <td>{{frequencyMap[task.frequency]}}</td>
                         <td>
@@ -54,7 +54,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor='let task of tasks'>
+                    <tr *ngFor='let task of tasks | callback: doneTasks'>
                         <td>
                             <md-icon *ngIf='task.priority==1'>snooze</md-icon>
                             <md-icon *ngIf='task.priority==2'>note</md-icon>

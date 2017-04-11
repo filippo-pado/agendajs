@@ -12,12 +12,14 @@ import { TaskListComponent } from './tasks/task-list.component';
 import { TaskDetailComponent } from './tasks/task-detail.component';
 
 import { TaskService } from './tasks/task.service';
+import { CallbackPipe } from './tasks/callback.pipe';
 
 @NgModule({
     declarations: [
         AppComponent,
         TaskListComponent,
-		TaskDetailComponent
+        TaskDetailComponent,
+        CallbackPipe
     ],
     imports: [
         BrowserModule,

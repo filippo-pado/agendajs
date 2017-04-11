@@ -28,7 +28,7 @@ export class TaskListComponent implements OnInit {
     getTasks(): void {
         this.taskService
             .getTasks()
-            .then(tasks => this.tasks = tasks.map(this.parseDate).sort(orderTasksBy('description')));
+            .then(tasks => this.tasks = tasks.map(this.prepareTask).sort(orderTasksBy('description')));
     };
 
     createTask(task: Task): void {
@@ -36,7 +36,7 @@ export class TaskListComponent implements OnInit {
             this.taskService
                 .create(task)
                 .then(resTask => {
-                    this.tasks.push(resTask);
+                    this.tasks.push(this.prepareTask(resTask));
                     this.tasks.sort(orderTasksBy('description'));
                     this.selectedTask = new Task();
                     this.actionToPerform = 'create';
@@ -61,7 +61,7 @@ export class TaskListComponent implements OnInit {
                 .then((resTask) => {
                     let idx = this.getIndexOfTask(resTask._id);
                     if (idx !== -1) {
-                        this.tasks[idx] = resTask;
+                        this.tasks[idx] = this.prepareTask(resTask);
                     }
                     this.selectedTask = new Task();
                     this.actionToPerform = 'create';
@@ -76,15 +76,51 @@ export class TaskListComponent implements OnInit {
     checkTask(task: Task): void {
         console.log('TODO: check task ' + task.description);
     }
+    todoTasks(task: Task) {
+        return task.todo;
+    }
+    doneTasks(task: Task) {
+        return !task.todo;
+    }
     private getIndexOfTask = (taskID: String) => {
         return this.tasks.findIndex((task) => {
             return task._id === taskID;
         });
     }
 
-    private parseDate(task): Task {
-        task['taskDate'] = new Date(task['taskDate']);
-        task['doneDate'] = new Date(task['doneDate']);
+    private prepareTask(task): Task {
+        task['taskDate'] = (task['taskDate'] instanceof Date) ? task['taskDate'] : new Date(task['taskDate']);
+        task['doneDate'] = (task['doneDate'] instanceof Date) ? task['doneDate'] : (task['doneDate'] === null ? null : new Date(task['doneDate']));
+        switch (task['frequency']) {
+            case 'once':
+                task['todo'] = task['doneDate'] === null ? true : false;
+                break;
+            case 'daily':
+                task['todo'] = task['doneDate'] === null ? true : dateDiff(task['doneDate'], new Date()) > 0;
+                break;
+            case 'weekly':
+                let weekday: number = task['taskDate'].getDay();
+                if (new Date().getDay() == weekday) {
+                    task['todo'] = task['doneDate'] === null ? true : dateDiff(task['doneDate'], new Date()) > 0;
+                } else
+                    task['todo'] = false;
+                break;
+            case 'monthly':
+                let monthday: number = task['taskDate'].getDate();
+                if (new Date().getDate() == monthday) {
+                    task['todo'] = task['doneDate'] === null ? true : dateDiff(task['doneDate'], new Date()) > 0;
+                } else {
+                    task['todo'] = false;
+                }
+                break;
+        }
         return task;
     }
+
 }
+
+function dateDiff(d1: Date, d2: Date): number {
+    let t2: number = d2.getTime();
+    let t1: number = d1.getTime();
+    return (t2 - t1) / (24 * 3600 * 1000);
+};
