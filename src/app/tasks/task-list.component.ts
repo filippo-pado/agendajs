@@ -14,6 +14,7 @@ export class TaskListComponent implements OnInit {
     selectedTask: Task = new Task();
     orderField: string = 'description';
     actionToPerform: string = 'create';
+    frequencyMap = { 'once': 'Una tantum', 'daily': 'Giornaliero', 'weekly': 'Settimanale', 'monthly': 'Mensile' };
 
     constructor(
         private taskService: TaskService,
@@ -36,6 +37,7 @@ export class TaskListComponent implements OnInit {
                 .create(task)
                 .then(resTask => {
                     this.tasks.push(resTask);
+                    this.tasks.sort(orderTasksBy('description'));
                     this.selectedTask = new Task();
                     this.actionToPerform = 'create';
                     this.messageBar.open('Impegno creato!', 'OK', { duration: 2000 });
