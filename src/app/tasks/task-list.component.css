@@ -1,6 +1,8 @@
 .taskTable {
     text-align: center;
     border-collapse: collapse;
+	width: 100%;
+	table-layout: fixed;
 }
 
 .taskTable > thead > tr,
@@ -10,13 +12,16 @@
 
 .taskTable > thead> tr > th,
 .taskTable > tbody> tr > td {
-    padding-left: 12px;
+    padding:1px;
 }
 
 .taskTable > tbody > tr:hover {
     background-color: #f5f5f5;
 }
-
+.colDescription {
+	width: 150px;
+}
 .description {
     text-align: left;
+	word-wrap: break-word;
 }

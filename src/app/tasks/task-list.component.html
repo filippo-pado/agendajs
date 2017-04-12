@@ -7,7 +7,7 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th fxFlexFill class='description'>Descrizione</th>
+                        <th class='colDescription'>Descrizione</th>
                         <th class=''>Data</th>
                         <th>Periodicità</th>
                     </tr>
@@ -44,7 +44,7 @@
     </md-card>
     <md-card fxFlex='50%'>
         <md-card-content>
-            <table class='taskTable'>
+            <table class='taskTable'>				
                 <thead>
                     <tr>
                         <th></th>
@@ -53,7 +53,7 @@
                         <th>Periodicità</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody>					
                     <tr *ngFor='let task of tasks | callback: doneTasks'>
                         <td>
                             <md-icon *ngIf='task.priority==1'>snooze</md-icon>
