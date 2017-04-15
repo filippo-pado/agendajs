@@ -1,14 +1,14 @@
 import { TestAppPage } from './app.po';
 
-describe('test-app App', () => {
+describe('Test app', () => {
   let page: TestAppPage;
 
   beforeEach(() => {
     page = new TestAppPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should have a toolbar AgendaJS', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getParagraphText()).toEqual('AgendaJS');
   });
 });
