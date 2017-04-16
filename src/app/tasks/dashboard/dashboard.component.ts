@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MdSnackBar } from '@angular/material';
 
-import { Task, orderTasksBy } from './task';
-import { TaskService } from './task.service';
+import { Task, orderTasksBy } from '../shared/task.model';
+import { TaskService } from '../shared/task.service';
 
 @Component({
-    selector: 'task-list',
-    templateUrl: './task-list.component.html',
-    styleUrls: ['./task-list.component.css']
+    selector: 'dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.css']
 })
-export class TaskListComponent implements OnInit {
+export class DashboardComponent implements OnInit {
     tasks: Task[] = [];
     selectedTask: Task = new Task();
     orderField: string = 'description';

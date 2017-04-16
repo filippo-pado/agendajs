@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 
-import { Task, orderTasksBy } from './task';
-import { TaskService } from './task.service';
-import { TaskListComponent } from './task-list.component';
+import { Task, orderTasksBy } from '../task.model';
+import { TaskService } from '../task.service';
+import { DashboardComponent } from '../../dashboard/dashboard.component';
 
 @Component({
     selector: 'task-detail',
@@ -11,7 +11,7 @@ import { TaskListComponent } from './task-list.component';
 })
 export class TaskDetailComponent {
     @Input() task: Task;
-    @Input() taskList: TaskListComponent;
+    @Input() taskList: DashboardComponent;
     @Input() actionToPerform: string;
 
     prioritySlider = {

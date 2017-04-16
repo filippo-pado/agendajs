@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    title = 'Task app';
+    tabLinks = [
+        { label: 'Dashboard', link: 'dashboard' },
+        { label: 'Tutti', link: 'full-list' }
+    ];
+    activeLinkIndex = 0;
 }
