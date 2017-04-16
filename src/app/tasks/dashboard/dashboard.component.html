@@ -1,92 +1,96 @@
-<task-detail [task]="selectedTask" [taskList]="this" [actionToPerform]="actionToPerform">
+<task-detail [task]="selectedTask" [actionToPerform]="actionToPerform">
 </task-detail>
 <md-card>
-	<md-card-header>
-		<button md-mini-fab md-card-avatar><md-icon>assignment</md-icon></button>
-		<div class='cardTitle'>Impegni da fare</div>
-	</md-card-header>
-	<md-card-content>
-		<table class='taskTable'>
-			<thead>
-				<tr>
-					<th></th>
-					<th fxFlexFill class='description'>Descrizione</th>
-					<th>Data</th>
-					<th>Periodicità</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor='let task of tasks | callback: todoTasks'>
-					<td>
-						<md-icon *ngIf='task.priority==1'>snooze</md-icon>
-						<md-icon *ngIf='task.priority==2'>note</md-icon>
-						<md-icon *ngIf='task.priority==3'>priority_high</md-icon>
-					</td>
-					<td class='description'>{{task.todo}}-{{task.description}}</td>
-					<td>{{task.taskDate | date:'yyyy-MM-dd'}}</td>
-					<td>{{frequencyMap[task.frequency]}}</td>
-					<td>
-						<button md-mini-fab color='primary' (click)='checkTask(task)'>
-							<md-icon>check</md-icon>
-						</button>
-					</td>
-					<td>
-						<button md-mini-fab color='accent' (click)='editTask(task)'>
-							<md-icon>edit</md-icon>
-						</button>
-					</td>
-					<td>
-						<button md-mini-fab color='warn' (click)='deleteTask(task)'>
-							<md-icon>delete</md-icon>
-						</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</md-card-content>
+    <md-card-header>
+        <button md-mini-fab md-card-avatar>
+            <md-icon>assignment</md-icon>
+        </button>
+        <div class='cardTitle'>Impegni da fare</div>
+    </md-card-header>
+    <md-card-content>
+        <table class='taskTable'>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th fxFlexFill class='description'>Descrizione</th>
+                    <th>Data</th>
+                    <th>Periodicità</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let task of tasks | callback: todoTasks'>
+                    <td>
+                        <md-icon *ngIf='task.priority==1'>snooze</md-icon>
+                        <md-icon *ngIf='task.priority==2'>note</md-icon>
+                        <md-icon *ngIf='task.priority==3'>priority_high</md-icon>
+                    </td>
+                    <td class='description'>{{task.todo}}-{{task.description}}</td>
+                    <td>{{task.taskDate | date:'yyyy-MM-dd'}}</td>
+                    <td>{{frequencyMap[task.frequency]}}</td>
+                    <td>
+                        <button md-mini-fab color='primary' (click)='checkTask(task)'>
+                            <md-icon>check</md-icon>
+                        </button>
+                    </td>
+                    <td>
+                        <button md-mini-fab color='accent' (click)='editTask(task)'>
+                            <md-icon>edit</md-icon>
+                        </button>
+                    </td>
+                    <td>
+                        <button md-mini-fab color='warn' (click)='deleteTask(task)'>
+                            <md-icon>delete</md-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </md-card-content>
 </md-card>
 <md-card>
-	<md-card-header>
-		<button md-mini-fab md-card-avatar><md-icon>playlist_add_check</md-icon></button>
-		<div class='cardTitle'>Impegni completati</div>
-	</md-card-header>
-	<md-card-content>
-		<table class='taskTable'>				
-			<thead>
-				<tr>
-					<th></th>
-					<th fxFlexFill class='description'>Descrizione</th>
-					<th>Data</th>
-					<th>Periodicità</th>
-				</tr>
-			</thead>
-			<tbody>					
-				<tr *ngFor='let task of tasks | callback: doneTasks'>
-					<td>
-						<md-icon *ngIf='task.priority==1'>snooze</md-icon>
-						<md-icon *ngIf='task.priority==2'>note</md-icon>
-						<md-icon *ngIf='task.priority==3'>priority_high</md-icon>
-					</td>
-					<td class='description'>{{task.description}}</td>
-					<td>{{task.taskDate | date:'yyyy-MM-dd'}}</td>
-					<td>{{frequencyMap[task.frequency]}}</td>
-					<td>
-						<button md-mini-fab color='primary' (click)='checkTask(task)'>
-							<md-icon>clear</md-icon>
-						</button>
-					</td>
-					<td>
-						<button md-mini-fab color='accent' (click)='editTask(task)'>
-							<md-icon>edit</md-icon>
-						</button>
-					</td>
-					<td>
-						<button md-mini-fab color='warn' (click)='deleteTask(task)'>
-							<md-icon>delete</md-icon>
-						</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</md-card-content>
+    <md-card-header>
+        <button md-mini-fab md-card-avatar>
+            <md-icon>playlist_add_check</md-icon>
+        </button>
+        <div class='cardTitle'>Impegni completati</div>
+    </md-card-header>
+    <md-card-content>
+        <table class='taskTable'>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th fxFlexFill class='description'>Descrizione</th>
+                    <th>Data</th>
+                    <th>Periodicità</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let task of tasks | callback: doneTasks'>
+                    <td>
+                        <md-icon *ngIf='task.priority==1'>snooze</md-icon>
+                        <md-icon *ngIf='task.priority==2'>note</md-icon>
+                        <md-icon *ngIf='task.priority==3'>priority_high</md-icon>
+                    </td>
+                    <td class='description'>{{task.description}}</td>
+                    <td>{{task.taskDate | date:'yyyy-MM-dd'}}</td>
+                    <td>{{frequencyMap[task.frequency]}}</td>
+                    <td>
+                        <button md-mini-fab color='primary' (click)='checkTask(task)'>
+                            <md-icon>clear</md-icon>
+                        </button>
+                    </td>
+                    <td>
+                        <button md-mini-fab color='accent' (click)='editTask(task)'>
+                            <md-icon>edit</md-icon>
+                        </button>
+                    </td>
+                    <td>
+                        <button md-mini-fab color='warn' (click)='deleteTask(task)'>
+                            <md-icon>delete</md-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </md-card-content>
 </md-card>

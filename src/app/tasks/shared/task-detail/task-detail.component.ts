@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Task, orderTasksBy } from '../task.model';
 import { TaskService } from '../task.service';
@@ -11,8 +11,8 @@ import { DashboardComponent } from '../../dashboard/dashboard.component';
 })
 export class TaskDetailComponent {
     @Input() task: Task;
-    @Input() taskList: DashboardComponent;
     @Input() actionToPerform: string;
+    @Output() taskEvents = new EventEmitter();
 
     prioritySlider = {
         max: 3,
@@ -32,14 +32,14 @@ export class TaskDetailComponent {
     ) {};
 
     createTask(): void {
-        this.taskList.createTask(this.task);
+        this.taskEvents.emit(this.task);
     }
 
     updateTask(): void {
-        this.taskList.updateTask(this.task);
+        this.taskEvents.emit(this.task);
     }
 
     deleteTask(): void {
-        this.taskList.deleteTask(this.task);
+        this.taskEvents.emit(this.task);
     }
 }
