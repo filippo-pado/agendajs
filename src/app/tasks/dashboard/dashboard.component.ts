@@ -10,10 +10,9 @@ import { TaskService } from '../shared/task.service';
     styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+    taskForm = { actionToPerform: 'create', task: new Task() };
     tasks: Task[] = [];
-    selectedTask: Task = new Task();
     orderField: string = 'description';
-    actionToPerform: string = 'create';
     frequencyMap = { 'once': 'Una tantum', 'daily': 'Giornaliero', 'weekly': 'Settimanale', 'monthly': 'Mensile' };
 
     constructor(
@@ -31,14 +30,14 @@ export class DashboardComponent implements OnInit {
             .then(tasks => this.tasks = tasks.map(this.prepareTask).sort(orderTasksBy('description')));
     };
 
-    createTask(task: Task): void {
+    /*createTask(task: Task): void {
         if (task.description.trim() != '') {
             this.taskService
                 .create(task)
                 .then(resTask => {
                     this.tasks.push(this.prepareTask(resTask));
                     this.tasks.sort(orderTasksBy('description'));
-                    this.selectedTask = new Task();
+                    this.taskForm = new Task();
                     this.actionToPerform = 'create';
                     this.messageBar.open('Impegno creato!', 'OK', { duration: 2000 });
                 });
@@ -50,7 +49,7 @@ export class DashboardComponent implements OnInit {
             .delete(task._id)
             .then(() => {
                 this.tasks = this.tasks.filter(t => t !== task);
-                if (this.selectedTask === task) { this.selectedTask = new Task(); }
+                if (this.taskForm === task) { this.taskForm = new Task(); }
                 this.messageBar.open('Impegno eliminato!', 'OK', { duration: 2000 });
             });
     };
@@ -63,15 +62,15 @@ export class DashboardComponent implements OnInit {
                     if (idx !== -1) {
                         this.tasks[idx] = this.prepareTask(resTask);
                     }
-                    this.selectedTask = new Task();
+                    this.taskForm = new Task();
                     this.actionToPerform = 'create';
                     this.messageBar.open('Impegno modificato!', 'OK', { duration: 2000 });
                 });
         }
-    };
+    };*/
     editTask(task: Task): void {
-        this.selectedTask = task;
-        this.actionToPerform = 'update';
+        this.taskForm.task = task;
+        this.taskForm.actionToPerform = 'update';
     };
     checkTask(task: Task): void {
         console.log('TODO: check task ' + task.description);

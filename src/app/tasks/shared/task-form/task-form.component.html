@@ -1,0 +1,37 @@
+<md-card *ngIf="task">
+    <md-card-content>
+        <form #taskForm="ngForm">
+            <div fxLayoutWrap="wrap" fxLayoutAlign="space-around end" fxLayoutGap="20px">
+                <md-input-container fxFlex="1 1 50%">
+                    <input name='description' type='text' required mdInput placeholder='Descrizione impegno' [(ngModel)]="task.description">
+                </md-input-container>
+                <div fxLayout="column" fxLayoutAlign="end center">
+                    <label>Priorità</label>
+                    <div fxLayout="row" fxLayoutAlign="space-around center">
+                        <md-icon>snooze</md-icon>
+                        <md-slider name='priority' [max]="prioritySlider.max" [min]="prioritySlider.min" [step]="prioritySlider.step" [(ngModel)]="task.priority" thumbLabel tick-interval></md-slider>
+                        <md-icon>priority_high</md-icon>
+                    </div>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="space-around" class="em-margin-bottom">
+                    <label>Data impegno:</label>
+                    <material-datepicker name='taskDate' [(date)]="task.taskDate"></material-datepicker>
+                </div>
+                <md-select name='frequency' class="em-margin-bottom" placeholder="Cadenza" [(ngModel)]="task.frequency" name="frequency">
+                    <md-option *ngFor="let freq of frequencyList" [value]="freq.value">
+                        {{freq.viewValue}}
+                    </md-option>
+                </md-select>
+                <button *ngIf='actionToPerform=="create"' class="em-margin-bottom" md-fab color='primary' (click)='createTask()' [disabled]="!taskForm.form.valid">
+                    <md-icon>note_add</md-icon>
+                </button>
+                <button *ngIf='actionToPerform=="update"' class="em-margin-bottom" md-fab color='primary' (click)='updateTask()' [disabled]="!taskForm.form.valid">
+                    <md-icon>edit</md-icon>
+                </button>
+                <button *ngIf='actionToPerform=="update"' class="em-margin-bottom" md-fab color='warn' (click)='cancelEdit()'>
+                    <md-icon>cancel</md-icon>
+                </button>
+            </div>
+        </form>
+    </md-card-content>
+</md-card>

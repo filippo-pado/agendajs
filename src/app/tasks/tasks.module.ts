@@ -8,7 +8,7 @@ import { DatepickerModule } from 'angular2-material-datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { TaskDetailComponent } from './shared/task-detail/task-detail.component';
+import { TaskFormComponent } from './shared/task-form/task-form.component';
 import { TaskService } from './shared/task.service';
 import { TasksRoutingModule } from './tasks-routing.module';
 import { CallbackPipe } from '../shared/callback.pipe';
@@ -26,7 +26,7 @@ import { CallbackPipe } from '../shared/callback.pipe';
     ],
     declarations: [
         DashboardComponent,
-        TaskDetailComponent,
+        TaskFormComponent,
         CallbackPipe
     ],
     providers: [TaskService]
