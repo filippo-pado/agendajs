@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Task } from '../task.model';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
@@ -8,7 +8,7 @@ import { DashboardComponent } from '../../dashboard/dashboard.component';
     templateUrl: './task-form.component.html',
     styleUrls: ['./task-form.component.css']
 })
-export class TaskFormComponent implements OnChanges {
+export class TaskFormComponent {
     @Input() actionToPerform: string;
     @Input() task: Task;
     @Output() taskUpdated = new EventEmitter();
@@ -26,25 +26,13 @@ export class TaskFormComponent implements OnChanges {
         { value: 'monthly', viewValue: 'Mensile' }
     ];
 
-    /*ngOnInit(): void {
-
-    };*/
-
-    ngOnChanges(changes: SimpleChanges) {
-        // changes.prop contains the old and the new value...
-        this.actionToPerform = this.actionToPerform ? this.actionToPerform : 'create';
-        this.task = this.task ? this.task : new Task();
-    }
-
     createTask(): void {
-        this.taskUpdated.emit({ actiontoPerform: 'create', task: this.task });
-    }
-
+        this.taskUpdated.emit({ button: 'create', task: this.task });
+    };
     updateTask(): void {
-        this.taskUpdated.emit({ actiontoPerform: 'update', task: this.task });
-    }
+        this.taskUpdated.emit({ button: 'update', task: this.task });
+    };
     cancelEdit(): void {
-        this.actionToPerform = 'create';
-        this.task = new Task();
-    }
+        this.taskUpdated.emit({ button: 'cancel', task: this.task });
+    };
 }

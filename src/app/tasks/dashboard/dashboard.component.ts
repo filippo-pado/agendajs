@@ -24,32 +24,52 @@ export class DashboardComponent implements OnInit {
         this.getTasks();
     };
 
+    taskUpdated(event: any): void {
+        switch (event.button) {
+            case 'create':
+                this.createTask(event.task);
+                break;
+            case 'update':
+                this.updateTask(event.task);
+                break;
+            case 'cancel':
+                this.resetForm();
+                break;
+        }
+    }
+
+
     getTasks(): void {
         this.taskService
             .getTasks()
             .then(tasks => this.tasks = tasks.map(this.prepareTask).sort(orderTasksBy('description')));
     };
 
-    /*createTask(task: Task): void {
+    createTask(task: Task): void {
         if (task.description.trim() != '') {
             this.taskService
                 .create(task)
                 .then(resTask => {
+                    //update dashboard
                     this.tasks.push(this.prepareTask(resTask));
                     this.tasks.sort(orderTasksBy('description'));
-                    this.taskForm = new Task();
-                    this.actionToPerform = 'create';
+                    //update form                    
+                    this.resetForm();
+                    //notify user
                     this.messageBar.open('Impegno creato!', 'OK', { duration: 2000 });
                 });
         }
     };
-
     deleteTask(task: Task): void {
         this.taskService
             .delete(task._id)
             .then(() => {
+                //update dashboard
                 this.tasks = this.tasks.filter(t => t !== task);
-                if (this.taskForm === task) { this.taskForm = new Task(); }
+                //update form if needed
+                if (this.taskForm.task._id === task._id)
+                    this.resetForm();
+                //notify user
                 this.messageBar.open('Impegno eliminato!', 'OK', { duration: 2000 });
             });
     };
@@ -60,16 +80,22 @@ export class DashboardComponent implements OnInit {
                 .then((resTask) => {
                     let idx = this.getIndexOfTask(resTask._id);
                     if (idx !== -1) {
+                        //update dashboard
                         this.tasks[idx] = this.prepareTask(resTask);
+                        //update form                    
+                        this.resetForm();
+                        //notify user
+                        this.messageBar.open('Impegno modificato!', 'OK', { duration: 2000 });
                     }
-                    this.taskForm = new Task();
-                    this.actionToPerform = 'create';
-                    this.messageBar.open('Impegno modificato!', 'OK', { duration: 2000 });
                 });
         }
-    };*/
+    };
+    resetForm(): void {
+        this.taskForm.actionToPerform = 'create';
+        this.taskForm.task = new Task();
+    }
     editTask(task: Task): void {
-        this.taskForm.task = task;
+        this.taskForm.task = Object.assign(new Task(), task);
         this.taskForm.actionToPerform = 'update';
     };
     checkTask(task: Task): void {

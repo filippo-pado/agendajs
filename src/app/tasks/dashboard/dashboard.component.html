@@ -1,4 +1,4 @@
-<task-form [actionToPerform]="taskForm.actionToPerform" [task]="taskForm.task">
+<task-form [actionToPerform]="taskForm.actionToPerform" [task]="taskForm.task" (taskUpdated)="taskUpdated($event)">>
 </task-form>
 <md-card>
     <md-card-header>

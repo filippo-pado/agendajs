@@ -22,15 +22,17 @@
                         {{freq.viewValue}}
                     </md-option>
                 </md-select>
-                <button *ngIf='actionToPerform=="create"' class="em-margin-bottom" md-fab color='primary' (click)='createTask()' [disabled]="!taskForm.form.valid">
-                    <md-icon>note_add</md-icon>
-                </button>
-                <button *ngIf='actionToPerform=="update"' class="em-margin-bottom" md-fab color='primary' (click)='updateTask()' [disabled]="!taskForm.form.valid">
-                    <md-icon>edit</md-icon>
-                </button>
-                <button *ngIf='actionToPerform=="update"' class="em-margin-bottom" md-fab color='warn' (click)='cancelEdit()'>
-                    <md-icon>cancel</md-icon>
-                </button>
+                <div fxLayout="row" fxLayoutGap="10px">
+                    <button *ngIf='actionToPerform=="create"' class="em-margin-bottom" md-fab color='primary' (click)='createTask()' [disabled]="!taskForm.form.valid">
+                        <md-icon>note_add</md-icon>
+                    </button>
+                    <button *ngIf='actionToPerform=="update"' class="em-margin-bottom" md-fab color='primary' (click)='updateTask()' [disabled]="!taskForm.form.valid">
+                        <md-icon>edit</md-icon>
+                    </button>
+                    <button *ngIf='actionToPerform=="update"' class="em-margin-bottom" md-fab color='warn' (click)='cancelEdit()'>
+                        <md-icon>cancel</md-icon>
+                    </button>
+                </div>
             </div>
         </form>
     </md-card-content>
