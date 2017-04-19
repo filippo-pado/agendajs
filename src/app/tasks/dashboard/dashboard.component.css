@@ -1,25 +1,22 @@
-.taskTable {
-    text-align: center;
-    border-collapse: collapse;
+.text {
+    min-width: 140px;
 }
 
-.taskTable > thead > tr,
-.taskTable > tbody > tr {
-    border-bottom: 1px solid #ddd;
+.icon {
+    min-width: 40px;
 }
 
-.taskTable > thead> tr > th,
-.taskTable > tbody> tr > td {
-    padding:5px;
+.table-row {
+    border-bottom: 2px solid #e0e0e0;
+    padding-top: 5px;
 }
 
-.taskTable > tbody > tr:hover {
-    background-color: #f5f5f5;
-}
 .description {
+    min-width: 200px;
     text-align: left;
-	word-wrap: break-word;
+    word-wrap: break-word;
 }
-.cardTitle{
-	font-size: 2em;
+
+.cardTitle {
+    font-size: 2em;
 }
