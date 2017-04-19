@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MdSnackBar } from '@angular/material';
 
-import { Task, orderTasksBy } from '../shared/task.model';
+import { Task } from '../shared/task.model';
 import { TaskService } from '../shared/task.service';
 
 @Component({
@@ -14,16 +14,17 @@ export class DashboardComponent implements OnInit {
     tasks: Task[] = [];
     orderField: string = 'description';
     frequencyMap = { 'once': 'Una tantum', 'daily': 'Giornaliero', 'weekly': 'Settimanale', 'monthly': 'Mensile' };
-
+    tables = [
+        { title: 'Da fare', filter: 'todo', buttonIcon: 'check', tableIcon: 'assignment' },
+        { title: 'Compleati', filter: 'done', buttonIcon: 'clear', tableIcon: 'playlist_add_check' }
+    ];
     constructor(
         private taskService: TaskService,
         public messageBar: MdSnackBar
     ) {};
-
     ngOnInit(): void {
         this.getTasks();
     };
-
     taskUpdated(event: any): void {
         switch (event.button) {
             case 'create':
@@ -36,23 +37,20 @@ export class DashboardComponent implements OnInit {
                 this.resetForm();
                 break;
         }
-    }
-
-
+    };
     getTasks(): void {
         this.taskService
             .getTasks()
-            .then(tasks => this.tasks = tasks.map(this.prepareTask).sort(orderTasksBy('description')));
+            .then(tasks => this.tasks = tasks.sort(Task.orderTasksBy('description')));
     };
-
     createTask(task: Task): void {
         if (task.description.trim() != '') {
             this.taskService
                 .create(task)
                 .then(resTask => {
                     //update dashboard
-                    this.tasks.push(this.prepareTask(resTask));
-                    this.tasks.sort(orderTasksBy('description'));
+                    this.tasks.push(resTask);
+                    this.tasks.sort(Task.orderTasksBy('description'));
                     //update form                    
                     this.resetForm();
                     //notify user
@@ -81,7 +79,7 @@ export class DashboardComponent implements OnInit {
                     let idx = this.getIndexOfTask(resTask._id);
                     if (idx !== -1) {
                         //update dashboard
-                        this.tasks[idx] = this.prepareTask(resTask);
+                        this.tasks[idx] = resTask;
                         //update form                    
                         this.resetForm();
                         //notify user
@@ -93,59 +91,17 @@ export class DashboardComponent implements OnInit {
     resetForm(): void {
         this.taskForm.actionToPerform = 'create';
         this.taskForm.task = new Task();
-    }
+    };
     editTask(task: Task): void {
-        this.taskForm.task = Object.assign(new Task(), task);
         this.taskForm.actionToPerform = 'update';
+        this.taskForm.task = Object.assign(new Task(), task);
     };
     checkTask(task: Task): void {
         console.log('TODO: check task ' + task.description);
-    }
-    todoTasks(task: Task) {
-        return task.todo;
-    }
-    doneTasks(task: Task) {
-        return !task.todo;
-    }
-    private getIndexOfTask = (taskID: String) => {
+    };
+    private getIndexOfTask: any = (taskID: String) => {
         return this.tasks.findIndex((task) => {
             return task._id === taskID;
         });
-    }
-
-    private prepareTask(task): Task {
-        task['taskDate'] = (task['taskDate'] instanceof Date) ? task['taskDate'] : new Date(task['taskDate']);
-        task['doneDate'] = (task['doneDate'] instanceof Date) ? task['doneDate'] : (task['doneDate'] === null ? null : new Date(task['doneDate']));
-        switch (task['frequency']) {
-            case 'once':
-                task['todo'] = task['doneDate'] === null ? true : false;
-                break;
-            case 'daily':
-                task['todo'] = task['doneDate'] === null ? true : dateDiff(task['doneDate'], new Date()) > 0;
-                break;
-            case 'weekly':
-                let weekday: number = task['taskDate'].getDay();
-                if (new Date().getDay() == weekday) {
-                    task['todo'] = task['doneDate'] === null ? true : dateDiff(task['doneDate'], new Date()) > 0;
-                } else
-                    task['todo'] = false;
-                break;
-            case 'monthly':
-                let monthday: number = task['taskDate'].getDate();
-                if (new Date().getDate() == monthday) {
-                    task['todo'] = task['doneDate'] === null ? true : dateDiff(task['doneDate'], new Date()) > 0;
-                } else {
-                    task['todo'] = false;
-                }
-                break;
-        }
-        return task;
-    }
-
+    };
 }
-
-function dateDiff(d1: Date, d2: Date): number {
-    let t2: number = d2.getTime();
-    let t1: number = d1.getTime();
-    return (t2 - t1) / (24 * 3600 * 1000);
-};

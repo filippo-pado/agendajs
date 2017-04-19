@@ -11,7 +11,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { TaskFormComponent } from './shared/task-form/task-form.component';
 import { TaskService } from './shared/task.service';
 import { TasksRoutingModule } from './tasks-routing.module';
-import { CallbackPipe } from '../shared/callback.pipe';
+import { TaskFilterPipe } from './shared/task-filter.pipe';
+import { UtilsService } from '../shared/utils.service';
 
 @NgModule({
     imports: [
@@ -27,8 +28,8 @@ import { CallbackPipe } from '../shared/callback.pipe';
     declarations: [
         DashboardComponent,
         TaskFormComponent,
-        CallbackPipe
+        TaskFilterPipe
     ],
-    providers: [TaskService]
+    providers: [TaskService, UtilsService]
 })
 export class TasksModule {}

@@ -26,13 +26,7 @@ export class TaskFormComponent {
         { value: 'monthly', viewValue: 'Mensile' }
     ];
 
-    createTask(): void {
-        this.taskUpdated.emit({ button: 'create', task: this.task });
-    };
-    updateTask(): void {
-        this.taskUpdated.emit({ button: 'update', task: this.task });
-    };
-    cancelEdit(): void {
-        this.taskUpdated.emit({ button: 'cancel', task: this.task });
-    };
+    notifyTaskUpdated(button: string) {
+        this.taskUpdated.emit({ button: button, task: this.task });
+    }
 }
