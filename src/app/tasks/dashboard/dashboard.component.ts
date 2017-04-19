@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
     frequencyMap = { 'once': 'Una tantum', 'daily': 'Giornaliero', 'weekly': 'Settimanale', 'monthly': 'Mensile' };
     tables = [
         { title: 'Da fare', filter: 'todo', buttonIcon: 'check', tableIcon: 'assignment' },
-        { title: 'Compleati', filter: 'done', buttonIcon: 'clear', tableIcon: 'playlist_add_check' }
+        { title: 'Completati', filter: 'done', buttonIcon: 'clear', tableIcon: 'playlist_add_check' }
     ];
     constructor(
         private taskService: TaskService,

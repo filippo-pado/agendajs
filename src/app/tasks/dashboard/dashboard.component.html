@@ -1,36 +1,36 @@
 <task-form [actionToPerform]="taskForm.actionToPerform" [task]="taskForm.task" (taskUpdated)="taskUpdated($event)">>
 </task-form>
 <md-card *ngFor='let table of tables'>
-    <md-card-header>
-        <button md-mini-fab md-card-avatar>
-            <md-icon>{{table.tableIcon}}</md-icon>
-        </button>
-        <div class='cardTitle'>{{table.title}}</div>
-    </md-card-header>
     <md-card-content fxLayout="column">
-        <div class="table-row" fxLayout="row">
-            <div fxLayout="row" fxFlex="grow">
-                <div class="icon"></div>
-                <div class="description">Descrizione</div>
-            </div>
-            <div class="text">Completato</div>
-            <div class="text">Data</div>
-            <div class="text">Periodicità</div>
-            <div class="text"></div>
+        <div class='cardTitle'>
+            <button md-fab>
+                <md-icon>{{table.tableIcon}}</md-icon>
+            </button>
+            {{table.title}}
         </div>
-        <div class="table-row" fxLayout="row" *ngFor='let task of tasks | taskFilter:"dashboard" | taskFilter:table.filter'>
-            <div fxLayout="row" fxFlex="grow">
+        <div class="table-row header" fxLayout="row" fxLayout.xs="column">
+            <div class="icon"></div>
+            <div class="description" fxFlex="grow" [ngStyle.xs]="{'text-align': 'center'}">Descrizione</div>
+            <div fxLayout="row" fxLayout.sm="column" fxFlexAlign="center">
+                <div class="text">Data</div>
+                <div class="text">Periodicità</div>
+            </div>
+            <div class="buttons"></div>
+        </div>
+        <div class="table-row" fxLayout="row" fxLayout.xs="column" *ngFor='let task of tasks | taskFilter:"dashboard" | taskFilter:table.filter'>
+            <div>
                 <div class="icon">
                     <md-icon *ngIf='task.priority==1'>snooze</md-icon>
                     <md-icon *ngIf='task.priority==2'>note</md-icon>
                     <md-icon *ngIf='task.priority==3'>priority_high</md-icon>
                 </div>
-                <div class="description">{{task.description}}</div>
             </div>
-            <div class="text">{{task.doneDate | date:'yyyy-MM-dd'}}</div>
-            <div class="text">{{task.taskDate | date:'yyyy-MM-dd'}}</div>
-            <div class="text">{{frequencyMap[task.frequency]}}</div>
-            <div class="text">
+            <div class="description" fxFlex="grow" [ngStyle.xs]="{'text-align': 'center'}">{{task.description}}</div>
+            <div fxLayout="row" fxLayout.sm="column" fxFlexAlign="center">
+                <div class="text">{{task.taskDate | date:'yyyy-MM-dd'}}</div>
+                <div class="text">{{frequencyMap[task.frequency]}}</div>
+            </div>
+            <div class="buttons">
                 <button md-mini-fab color='primary' (click)='checkTask(task)'>
                     <md-icon>{{table.buttonIcon}}</md-icon>
                 </button>
