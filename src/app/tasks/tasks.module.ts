@@ -8,6 +8,7 @@ import { DatepickerModule } from 'angular2-material-datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { FullListComponent } from './full-list/full-list.component';
 import { TaskFormComponent } from './shared/task-form/task-form.component';
 import { TaskService } from './shared/task.service';
 import { TasksRoutingModule } from './tasks-routing.module';
@@ -27,6 +28,7 @@ import { UtilsService } from '../shared/utils.service';
     ],
     declarations: [
         DashboardComponent,
+        FullListComponent,
         TaskFormComponent,
     ],
     providers: [TaskService, UtilsService, TaskUtilsService]
