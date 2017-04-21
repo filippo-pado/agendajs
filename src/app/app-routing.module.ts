@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { TasksRoutingModule } from './tasks/tasks-routing.module'
 import { PageNotFoundComponent } from './shared/not-found.component';
+import { tasksRoutes } from './tasks/tasks-routing.module';
+
 
 const appRoutes: Routes = [{
+    path: 'tasks',
+	children: tasksRoutes
+}, {
     path: '',
     redirectTo: '/tasks',
     pathMatch: 'full'
-}, {
-    path: 'tasks',
-    loadChildren: () => TasksRoutingModule
 }, {
     path: '**',
     component: PageNotFoundComponent

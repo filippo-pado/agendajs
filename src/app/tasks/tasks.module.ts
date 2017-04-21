@@ -11,14 +11,12 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FullListComponent } from './full-list/full-list.component';
 import { TaskFormComponent } from './shared/task-form/task-form.component';
 import { TaskService } from './shared/task.service';
-import { TasksRoutingModule } from './tasks-routing.module';
 import { TaskUtilsService } from './shared/task-utils.service';
 import { UtilsService } from '../shared/utils.service';
 
 @NgModule({
     imports: [
         CommonModule,
-        TasksRoutingModule,
         MaterialModule,
         FormsModule,
         HttpModule,
