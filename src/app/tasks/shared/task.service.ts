@@ -43,10 +43,10 @@ export class TaskService {
             .catch(this.handleError);
     };
 
-    update(task: Task): Promise < Task > {
-        const url = `${this.tasksUrl}/${task._id}`;
+    update(id: string, updates: any): Promise < Task > {
+        const url = `${this.tasksUrl}/${id}`;
         return this.http
-            .put(url, JSON.stringify(task), { headers: this.headers })
+            .put(url, JSON.stringify(updates), { headers: this.headers })
             .toPromise()
             .then(res => this.deserializeTask(res.json()) as Task)
             .catch(this.handleError);

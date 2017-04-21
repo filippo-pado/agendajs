@@ -47,16 +47,16 @@ export class TaskFilterPipe implements PipeTransform {
             case 'once':
                 return task['doneDate'] === null ? true : false;
             case 'daily':
-                return task['doneDate'] === null ? true : this.utils.dateDiff(task['doneDate'], new Date()) > 0;
+                return task['doneDate'] === null ? true : Math.abs(this.utils.dateDiff(task['doneDate'], new Date())) > 0;
             case 'weekly':
                 let weekday: number = task['taskDate'].getDay();
                 if (new Date().getDay() == weekday)
-                    return task['doneDate'] === null ? true : this.utils.dateDiff(task['doneDate'], new Date()) > 0;
+                    return task['doneDate'] === null ? true : Math.abs(this.utils.dateDiff(task['doneDate'], new Date())) > 0;
                 return false;
             case 'monthly':
                 let monthday: number = task['taskDate'].getDate();
                 if (new Date().getDate() == monthday)
-                    return task['doneDate'] === null ? true : this.utils.dateDiff(task['doneDate'], new Date()) > 0;
+                    return task['doneDate'] === null ? true : Math.abs(this.utils.dateDiff(task['doneDate'], new Date())) > 0;
                 return false;
         };
     };

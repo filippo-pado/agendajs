@@ -18,21 +18,25 @@
             <div class="buttons"></div>
         </div>
         <div class="table-row" fxLayout="row" fxLayout.xs="column" *ngFor='let task of tasks | taskFilter:"dashboard" | taskFilter:table.filter'>
-            <div>
+            <div fxFlexAlign="center">
                 <div class="icon">
                     <md-icon *ngIf='task.priority==1'>snooze</md-icon>
                     <md-icon *ngIf='task.priority==2'>note</md-icon>
                     <md-icon *ngIf='task.priority==3'>priority_high</md-icon>
                 </div>
             </div>
-            <div class="description" fxFlex="grow" [ngStyle.xs]="{'text-align': 'center'}">{{task.description}}</div>
+            <div class="description" fxFlex="grow" fxFlexAlign.gt-xs="center" [ngStyle.xs]="{'text-align': 'center'}">{{task.description}}</div>
             <div fxLayout="row" fxLayout.sm="column" fxFlexAlign="center">
+                <div class="text">{{task.doneDate | date:'yyyy-MM-dd'}}</div>
                 <div class="text">{{task.taskDate | date:'yyyy-MM-dd'}}</div>
                 <div class="text">{{frequencyMap[task.frequency]}}</div>
             </div>
             <div class="buttons">
-                <button md-mini-fab color='primary' (click)='checkTask(task)'>
-                    <md-icon>{{table.buttonIcon}}</md-icon>
+                <button md-mini-fab color='primary' *ngIf='table.action=="checkTask"' (click)='checkTask(task)'>
+                    <md-icon>check</md-icon>
+                </button>
+                <button md-mini-fab color='primary' *ngIf='table.action=="uncheckTask"' (click)='uncheckTask(task)'>
+                    <md-icon>clear</md-icon>
                 </button>
                 <button md-mini-fab color='accent' (click)='editTask(task)'>
                     <md-icon>edit</md-icon>

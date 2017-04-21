@@ -15,8 +15,8 @@ export class DashboardComponent implements OnInit {
     orderField: string = 'description';
     frequencyMap = { 'once': 'Una tantum', 'daily': 'Giornaliero', 'weekly': 'Settimanale', 'monthly': 'Mensile' };
     tables = [
-        { title: 'Da fare', filter: 'todo', buttonIcon: 'check', tableIcon: 'assignment' },
-        { title: 'Completati', filter: 'done', buttonIcon: 'clear', tableIcon: 'playlist_add_check' }
+        { title: 'Da fare', filter: 'todo', tableIcon: 'assignment', action: 'checkTask' },
+        { title: 'Completati', filter: 'done', tableIcon: 'playlist_add_check', action: 'uncheckTask' }
     ];
     constructor(
         private taskService: TaskService,
@@ -68,13 +68,13 @@ export class DashboardComponent implements OnInit {
                 if (this.taskForm.task._id === task._id)
                     this.resetForm();
                 //notify user
-                this.messageBar.open('Impegno eliminato!', 'OK', { duration: 2000 });
+                this.messageBar.open('Impegno: ' + task.description + ', eliminato!', 'OK', { duration: 2000 });
             });
     };
     updateTask(task: Task): void {
         if (task.description.trim() != '') {
             this.taskService
-                .update(task)
+                .update(task._id, task)
                 .then((resTask) => {
                     let idx = this.getIndexOfTask(resTask._id);
                     if (idx !== -1) {
@@ -97,7 +97,30 @@ export class DashboardComponent implements OnInit {
         this.taskForm.task = Object.assign(new Task(), task);
     };
     checkTask(task: Task): void {
-        console.log('TODO: check task ' + task.description);
+        this.taskService
+            .update(task._id, { doneDate: new Date() })
+            .then((resTask) => {
+                let idx = this.getIndexOfTask(resTask._id);
+                if (idx !== -1) {
+                    //update dashboard
+                    this.tasks[idx] = resTask;
+                    //notify user
+                    this.messageBar.open('Impegno: ' + resTask.description + ', fatto!', 'OK', { duration: 2000 });
+                }
+            });
+    };
+    uncheckTask(task: Task): void {
+        this.taskService
+            .update(task._id, { doneDate: null })
+            .then((resTask) => {
+                let idx = this.getIndexOfTask(resTask._id);
+                if (idx !== -1) {
+                    //update dashboard
+                    this.tasks[idx] = resTask;
+                    //notify user
+                    this.messageBar.open('Impegno: ' + resTask.description + ', da fare!', 'OK', { duration: 2000 });
+                }
+            });
     };
     private getIndexOfTask: any = (taskID: String) => {
         return this.tasks.findIndex((task) => {
