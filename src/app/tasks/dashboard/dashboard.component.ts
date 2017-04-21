@@ -3,6 +3,7 @@ import { MdSnackBar } from '@angular/material';
 
 import { Task } from '../shared/task.model';
 import { TaskService } from '../shared/task.service';
+import { TaskUtilsService } from '../shared/task-utils.service';
 
 @Component({
     selector: 'dashboard',
@@ -11,16 +12,17 @@ import { TaskService } from '../shared/task.service';
 })
 export class DashboardComponent implements OnInit {
     taskForm = { actionToPerform: 'create', task: new Task() };
-    tasks: Task[] = [];
+    taskLists: any = { 'todo': [], 'done': [] };
     orderField: string = 'description';
     frequencyMap = { 'once': 'Una tantum', 'daily': 'Giornaliero', 'weekly': 'Settimanale', 'monthly': 'Mensile' };
     tables = [
-        { title: 'Da fare', filter: 'todo', tableIcon: 'assignment', action: 'checkTask' },
-        { title: 'Completati', filter: 'done', tableIcon: 'playlist_add_check', action: 'uncheckTask' }
+        { title: 'Da fare', list: 'todo', tableIcon: 'assignment', action: 'checkTask' },
+        { title: 'Completati', list: 'done', tableIcon: 'playlist_add_check', action: 'uncheckTask' }
     ];
     constructor(
         private taskService: TaskService,
-        public messageBar: MdSnackBar
+        private messageBar: MdSnackBar,
+        private taskUtilsService: TaskUtilsService
     ) {};
     ngOnInit(): void {
         this.getTasks();
@@ -41,7 +43,11 @@ export class DashboardComponent implements OnInit {
     getTasks(): void {
         this.taskService
             .getTasks()
-            .then(tasks => this.tasks = tasks.sort(Task.orderTasksBy('description')));
+            .then(tasks => {
+                this.taskLists['todo'] = tasks;
+                this.taskLists['done'] = tasks;
+                this.updateDashboard();
+            });
     };
     createTask(task: Task): void {
         if (task.description.trim() != '') {
@@ -49,8 +55,9 @@ export class DashboardComponent implements OnInit {
                 .create(task)
                 .then(resTask => {
                     //update dashboard
-                    this.tasks.push(resTask);
-                    this.tasks.sort(Task.orderTasksBy('description'));
+                    this.taskLists['todo'].push(resTask);
+                    this.taskLists['done'].push(resTask);
+                    this.updateDashboard();
                     //update form                    
                     this.resetForm();
                     //notify user
@@ -63,7 +70,8 @@ export class DashboardComponent implements OnInit {
             .delete(task._id)
             .then(() => {
                 //update dashboard
-                this.tasks = this.tasks.filter(t => t !== task);
+                this.taskLists['todo'] = this.taskLists['todo'].filter(t => t !== task);
+                this.taskLists['done'] = this.taskLists['done'].filter(t => t !== task);
                 //update form if needed
                 if (this.taskForm.task._id === task._id)
                     this.resetForm();
@@ -76,17 +84,39 @@ export class DashboardComponent implements OnInit {
             this.taskService
                 .update(task._id, task)
                 .then((resTask) => {
-                    let idx = this.getIndexOfTask(resTask._id);
-                    if (idx !== -1) {
-                        //update dashboard
-                        this.tasks[idx] = resTask;
-                        //update form                    
-                        this.resetForm();
-                        //notify user
-                        this.messageBar.open('Impegno modificato!', 'OK', { duration: 2000 });
-                    }
+                    //update dashboard
+                    let idx = this.getIndexOfTask(this.taskLists['todo'], resTask._id);
+                    if (idx !== -1) this.taskLists['todo'][idx] = resTask;
+                    idx = this.getIndexOfTask(this.taskLists['done'], resTask._id);
+                    if (idx !== -1) this.taskLists['done'][idx] = resTask;
+                    this.updateDashboard();
+                    //update form                    
+                    this.resetForm();
+                    //notify user
+                    this.messageBar.open('Impegno modificato!', 'OK', { duration: 2000 });
                 });
         }
+    };
+    checkTask(task: Task): void {
+        this.taskService
+            .update(task._id, { doneDate: new Date() })
+            .then((resTask) => {
+                //update dashboard
+                this.switchList(resTask);
+                this.updateDashboard();
+                //notify user
+                this.messageBar.open('Impegno: ' + resTask.description + ', fatto!', 'OK', { duration: 2000 });
+            });
+    };
+    uncheckTask(task: Task): void {
+        this.taskService
+            .update(task._id, { doneDate: null })
+            .then((resTask) => {
+                this.switchList(resTask);
+                this.updateDashboard();
+                //notify user
+                this.messageBar.open('Impegno: ' + resTask.description + ', da fare!', 'OK', { duration: 2000 });
+            });
     };
     resetForm(): void {
         this.taskForm.actionToPerform = 'create';
@@ -96,34 +126,25 @@ export class DashboardComponent implements OnInit {
         this.taskForm.actionToPerform = 'update';
         this.taskForm.task = Object.assign(new Task(), task);
     };
-    checkTask(task: Task): void {
-        this.taskService
-            .update(task._id, { doneDate: new Date() })
-            .then((resTask) => {
-                let idx = this.getIndexOfTask(resTask._id);
-                if (idx !== -1) {
-                    //update dashboard
-                    this.tasks[idx] = resTask;
-                    //notify user
-                    this.messageBar.open('Impegno: ' + resTask.description + ', fatto!', 'OK', { duration: 2000 });
-                }
-            });
+    private switchList(resTask: Task): void {
+        let idx = this.getIndexOfTask(this.taskLists['todo'], resTask._id);
+        if (idx !== -1) {
+            this.taskLists['todo'].splice(idx, 1);
+            this.taskLists['done'].push(resTask);
+        } else {
+            idx = this.getIndexOfTask(this.taskLists['done'], resTask._id);
+            if (idx !== -1) {
+                this.taskLists['done'].splice(idx, 1);
+                this.taskLists['todo'].push(resTask);
+            }
+        }
+    }
+    private updateDashboard(): void {
+        this.taskLists['todo'] = this.taskUtilsService.filterTasks(this.taskLists['todo'], ['dashboard', 'todo']).sort(this.taskUtilsService.orderTasksBy('description'));
+        this.taskLists['done'] = this.taskUtilsService.filterTasks(this.taskLists['done'], ['dashboard', 'done']).sort(this.taskUtilsService.orderTasksBy('description'));
     };
-    uncheckTask(task: Task): void {
-        this.taskService
-            .update(task._id, { doneDate: null })
-            .then((resTask) => {
-                let idx = this.getIndexOfTask(resTask._id);
-                if (idx !== -1) {
-                    //update dashboard
-                    this.tasks[idx] = resTask;
-                    //notify user
-                    this.messageBar.open('Impegno: ' + resTask.description + ', da fare!', 'OK', { duration: 2000 });
-                }
-            });
-    };
-    private getIndexOfTask: any = (taskID: String) => {
-        return this.tasks.findIndex((task) => {
+    private getIndexOfTask: any = (taskList: Task[], taskID: String) => {
+        return taskList.findIndex((task) => {
             return task._id === taskID;
         });
     };

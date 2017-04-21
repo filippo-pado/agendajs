@@ -17,7 +17,7 @@
             </div>
             <div class="buttons"></div>
         </div>
-        <div class="table-row" fxLayout="row" fxLayout.xs="column" *ngFor='let task of tasks | taskFilter:"dashboard" | taskFilter:table.filter'>
+        <div class="table-row" fxLayout="row" fxLayout.xs="column" *ngFor='let task of taskLists[table.list]'>
             <div fxFlexAlign="center">
                 <div class="icon">
                     <md-icon *ngIf='task.priority==1'>snooze</md-icon>

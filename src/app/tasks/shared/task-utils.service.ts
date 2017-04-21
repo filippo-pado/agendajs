@@ -1,35 +1,35 @@
-import { PipeTransform, Pipe } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Task } from './task.model';
 import { UtilsService } from '../../shared/utils.service';
 
-@Pipe({
-    name: 'taskFilter',
-    pure: false
-})
-export class TaskFilterPipe implements PipeTransform {
+@Injectable()
+export class TaskUtilsService {
     constructor(
         private utils: UtilsService
     ) {};
-    public transform(tasks: Task[], filter: string): Task[] {
-        if (!tasks || !filter) {
+    public filterTasks(tasks: Task[], filters: string[]): Task[] {
+        if (!filters) {
             return tasks;
         }
-        return tasks.filter(task => {
-            switch (filter) {
-                case 'dashboard':
-                    return this.dashboardFilter(task);
-                case 'todo':
-                    return this.todoFilter(task);
-                case 'done':
-                    return !this.todoFilter(task);
-                default:
-                    return true;
-            }
-        });
-    }
+        let tasksCopy: Task[] = tasks.slice();
+        for (let filter of filters) {
+            tasksCopy = tasksCopy.filter(task => {
+                switch (filter) {
+                    case 'dashboard':
+                        return this.dashboardFilter(task);
+                    case 'todo':
+                        return this.todoFilter(task);
+                    case 'done':
+                        return !this.todoFilter(task);
+                    default:
+                        return true;
+                }
+            });
+        };
+        return tasksCopy;
+    };
 
-    private dashboardFilter(task: Task): boolean {
-        let range: number = 7; //7 days to show in dashboard
+    public dashboardFilter(task: Task, range: number = 7): boolean {
         switch (task['frequency']) {
             case 'once':
                 return (this.utils.dateDiff(task['taskDate'], new Date()) < range);
@@ -42,7 +42,7 @@ export class TaskFilterPipe implements PipeTransform {
                 return Math.abs(new Date().getDate() - monthday) < range;
         };
     };
-    private todoFilter(task: Task): boolean {
+    public todoFilter(task: Task): boolean {
         switch (task['frequency']) {
             case 'once':
                 return task['doneDate'] === null ? true : false;
@@ -60,4 +60,20 @@ export class TaskFilterPipe implements PipeTransform {
                 return false;
         };
     };
+    public orderTasksBy(property: string): any {
+        var sortOrder: number = 1;
+        if (property[0] === "-") {
+            sortOrder = -1;
+            property = property.substr(1);
+        }
+        return function(a, b): number {
+            var result: number;
+            if (typeof a[property] === 'string')
+                result = a[property].toLowerCase().localeCompare(b[property].toLowerCase());
+            else
+                result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+            return result * sortOrder;
+        }
+    };
+
 }

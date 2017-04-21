@@ -11,7 +11,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { TaskFormComponent } from './shared/task-form/task-form.component';
 import { TaskService } from './shared/task.service';
 import { TasksRoutingModule } from './tasks-routing.module';
-import { TaskFilterPipe } from './shared/task-filter.pipe';
+import { TaskUtilsService } from './shared/task-utils.service';
 import { UtilsService } from '../shared/utils.service';
 
 @NgModule({
@@ -28,8 +28,7 @@ import { UtilsService } from '../shared/utils.service';
     declarations: [
         DashboardComponent,
         TaskFormComponent,
-        TaskFilterPipe
     ],
-    providers: [TaskService, UtilsService]
+    providers: [TaskService, UtilsService, TaskUtilsService]
 })
 export class TasksModule {}
