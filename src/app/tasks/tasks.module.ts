@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DatepickerModule } from 'angular2-material-datepicker';
 
+import { TasksComponent } from './tasks.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FullListComponent } from './full-list/full-list.component';
 import { TaskFormComponent } from './shared/task-form/task-form.component';
@@ -25,6 +26,7 @@ import { TasksRoutingModule } from './tasks-routing.module';
 		TasksRoutingModule
     ],
     declarations: [
+		TasksComponent,
         DashboardComponent,
         FullListComponent,
         TaskFormComponent,
