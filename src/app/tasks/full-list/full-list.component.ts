@@ -46,7 +46,7 @@ export class FullListComponent implements OnInit {
             .then(tasks => {
                 this.taskLists['todo'] = tasks;
                 this.taskLists['done'] = tasks;
-                this.updateDashboard();
+                this.updateLists();
             });
     };
     createTask(task: Task): void {
@@ -54,10 +54,10 @@ export class FullListComponent implements OnInit {
             this.taskService
                 .create(task)
                 .then(resTask => {
-                    //update dashboard
+                    //update lists
                     this.taskLists['todo'].push(resTask);
                     this.taskLists['done'].push(resTask);
-                    this.updateDashboard();
+                    this.updateLists();
                     //update form                    
                     this.resetForm();
                     //notify user
@@ -69,7 +69,7 @@ export class FullListComponent implements OnInit {
         this.taskService
             .delete(task._id)
             .then(() => {
-                //update dashboard
+                //update lists
                 this.taskLists['todo'] = this.taskLists['todo'].filter(t => t !== task);
                 this.taskLists['done'] = this.taskLists['done'].filter(t => t !== task);
                 //update form if needed
@@ -84,12 +84,12 @@ export class FullListComponent implements OnInit {
             this.taskService
                 .update(task._id, task)
                 .then((resTask) => {
-                    //update dashboard
+                    //update list
                     let idx = this.getIndexOfTask(this.taskLists['todo'], resTask._id);
                     if (idx !== -1) this.taskLists['todo'][idx] = resTask;
                     idx = this.getIndexOfTask(this.taskLists['done'], resTask._id);
                     if (idx !== -1) this.taskLists['done'][idx] = resTask;
-                    this.updateDashboard();
+                    this.updateLists();
                     //update form                    
                     this.resetForm();
                     //notify user
@@ -101,9 +101,9 @@ export class FullListComponent implements OnInit {
         this.taskService
             .update(task._id, { doneDate: new Date() })
             .then((resTask) => {
-                //update dashboard
+                //update 
                 this.switchList(resTask);
-                this.updateDashboard();
+                this.updateLists();
                 //notify user
                 this.messageBar.open('Impegno: ' + resTask.description + ', fatto!', 'OK', { duration: 2000 });
             });
@@ -113,7 +113,7 @@ export class FullListComponent implements OnInit {
             .update(task._id, { doneDate: null })
             .then((resTask) => {
                 this.switchList(resTask);
-                this.updateDashboard();
+                this.updateLists();
                 //notify user
                 this.messageBar.open('Impegno: ' + resTask.description + ', da fare!', 'OK', { duration: 2000 });
             });
@@ -139,9 +139,9 @@ export class FullListComponent implements OnInit {
             }
         }
     }
-    private updateDashboard(): void {
-        this.taskLists['todo'] = this.taskUtilsService.filterTasks(this.taskLists['todo'], ['dashboard', 'todo']).sort(this.taskUtilsService.orderTasksBy('description'));
-        this.taskLists['done'] = this.taskUtilsService.filterTasks(this.taskLists['done'], ['dashboard', 'done']).sort(this.taskUtilsService.orderTasksBy('description'));
+    private updateLists(): void {
+        this.taskLists['todo'] = this.taskUtilsService.filterTasks(this.taskLists['todo'], ['todo']).sort(this.taskUtilsService.orderTasksBy('description'));
+        this.taskLists['done'] = this.taskUtilsService.filterTasks(this.taskLists['done'], ['done']).sort(this.taskUtilsService.orderTasksBy('description'));
     };
     private getIndexOfTask: any = (taskList: Task[], taskID: String) => {
         return taskList.findIndex((task) => {
