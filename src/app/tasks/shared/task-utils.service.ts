@@ -43,20 +43,22 @@ export class TaskUtilsService {
         };
     };
     public todoFilter(task: Task): boolean {
+        if (task['doneDate'] === null) return true;
+        //task has been done before
         switch (task['frequency']) {
             case 'once':
-                return task['doneDate'] === null ? true : false;
+                return false;
             case 'daily':
-                return task['doneDate'] === null ? true : Math.abs(this.utils.dateDiff(task['doneDate'], new Date())) > 0;
+                return !this.isToday(task['doneDate']);
             case 'weekly':
                 let weekday: number = task['taskDate'].getDay();
                 if (new Date().getDay() == weekday)
-                    return task['doneDate'] === null ? true : Math.abs(this.utils.dateDiff(task['doneDate'], new Date())) > 0;
+                    return !this.isToday(task['doneDate']);
                 return false;
             case 'monthly':
                 let monthday: number = task['taskDate'].getDate();
                 if (new Date().getDate() == monthday)
-                    return task['doneDate'] === null ? true : Math.abs(this.utils.dateDiff(task['doneDate'], new Date())) > 0;
+                    return !this.isToday(task['doneDate']);
                 return false;
         };
     };
@@ -75,5 +77,7 @@ export class TaskUtilsService {
             return result * sortOrder;
         }
     };
-
+    private isToday(date: Date): boolean {
+        return Math.abs(this.utils.dateDiff(date, new Date())) == 0;
+    }
 }
