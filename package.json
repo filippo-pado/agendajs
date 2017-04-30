@@ -8,13 +8,13 @@
   "main": "server.js",
   "scripts": {
     "ng": "ng",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start": "node server.js",
-    "postinstall": "ng build",
-	"mocha-test": "mocha --timeout 10000"
+    "postinstall": "ng build --prod",
+    "mocha-test": "mocha --timeout 10000"
   },
   "dependencies": {
     "@angular/animations": "^4.0.1",
