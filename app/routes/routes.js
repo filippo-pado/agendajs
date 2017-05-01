@@ -3,6 +3,10 @@ module.exports = function(app) {
     var express = require('express'),
         apiRoutes = express.Router(),
         path = require('path');
+	
+	require('./authentication.routes.js')(apiRoutes, app);
+	//require('./protect.routes.js')(apiRoutes, app);
+	require('./member.routes.js')(apiRoutes);
     require('./task.routes.js')(apiRoutes);
 
     app.use('/api', apiRoutes);

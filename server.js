@@ -8,6 +8,7 @@ var bodyParser = require('body-parser'); // pull information from HTML POST (exp
 
 // configuration ==================================================
 require('dotenv').config(); //loads .env file
+app.set('secret', process.env.SECRET);
 var database = require('./config/database');
 mongoose.connect(database.url, function(err) {
     if (err) return console.error(err);

@@ -12,10 +12,9 @@ chai.use(chaiHttp);
 //Our parent block
 describe('Tasks', () => {
     beforeEach((done) => { //Before each test we empty the database
-        /*Task.remove({}, () => {
+        Task.remove({}, () => {
             done();
-        });*/
-        done();
+        });
     });
     describe('/GET /POST tasks', () => {
         it('it should GET all the tasks', (done) => {
