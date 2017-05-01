@@ -1,0 +1,22 @@
+<div fxLayoutAlign="center">
+    <md-card class="loginCard" fxFlex="grow">
+        <md-card-content>
+            <div class="cardTitle">Login</div>
+            <form name="form" (ngSubmit)="loginForm.form.valid && login()" #loginForm="ngForm">
+                <div fxLayout="column">
+                    <md-input-container fxFlex="grow">
+                        <input name='name' type='text' required mdInput placeholder='Nome' [(ngModel)]="member.name" #name="ngModel" />
+                    </md-input-container>
+                    <md-input-container fxFlex="grow">
+                        <input name='password' type='password' required mdInput placeholder='Password' [(ngModel)]="member.password " #password="ngModel" />
+                    </md-input-container>
+                    <button fxFlexAlign="center" class="primary" md-fab [disabled]="loading">Login</button>
+                    <div class="report">
+                        <md-progress-bar *ngIf="loading" mode="indeterminate"></md-progress-bar>
+                        <div *ngIf='message' class="message">{{message}}</div>
+                    </div>
+                </div>
+            </form>
+        </md-card-content>
+    </md-card>
+</div>

@@ -1,0 +1,20 @@
+.loginCard {
+    max-width: 500px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.cardTitle {
+    font-size: 30px;
+    padding-bottom: 20px;
+    font-weight: bold;
+}
+
+.report {
+    margin-top: 25px;
+    height: 25px;
+}
+
+.message {
+    color: red;
+}

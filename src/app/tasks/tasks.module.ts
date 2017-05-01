@@ -15,6 +15,7 @@ import { TaskUtilsService } from './shared/task-utils.service';
 import { UtilsService } from '../shared/utils.service';
 import { TasksRoutingModule } from './tasks-routing.module';
 
+
 @NgModule({
     imports: [
         CommonModule,
@@ -23,13 +24,13 @@ import { TasksRoutingModule } from './tasks-routing.module';
         HttpModule,
         FlexLayoutModule,
         DatepickerModule,
-		TasksRoutingModule
+        TasksRoutingModule
     ],
     declarations: [
-		TasksComponent,
+        TasksComponent,
         DashboardComponent,
         FullListComponent,
-        TaskFormComponent,
+        TaskFormComponent
     ],
     providers: [TaskService, UtilsService, TaskUtilsService]
 })

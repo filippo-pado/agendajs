@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var memberSchema = new Schema({
     name: {
-        type: String, //john, joe, ecc
+        type: String,
         required: true
     },
     password: {

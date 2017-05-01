@@ -6,19 +6,19 @@ import { ActivatedRoute, Router } from '@angular/router';
     templateUrl: './tasks.component.html',
     styleUrls: ['./tasks.component.css']
 })
-export class TasksComponent implements OnInit{
-	constructor(
-		private router: Router,
-		private route: ActivatedRoute
-	) {}
+export class TasksComponent implements OnInit {
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute
+    ) {}
 
     tabLinks = [
         { label: 'Dashboard', link: 'dashboard' },
         { label: 'Tutti', link: 'full-list' }
     ];
     activeLinkIndex = 0;
-	
-	ngOnInit(): void {
+
+    ngOnInit(): void {
         this.router.navigate(['dashboard'], { relativeTo: this.route });
-	};
+    };
 }
