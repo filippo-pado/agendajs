@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './shared/not-found.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthService } from './auth/auth.service';
-import { MemberService } from './auth/member.service';
+//import { MemberService } from './auth/member.service';
 import { LoginComponent } from './auth/login.component';
 
 @NgModule({
@@ -32,8 +32,7 @@ import { LoginComponent } from './auth/login.component';
     ],
     providers: [
         AuthGuard,
-        AuthService,
-        MemberService
+        AuthService
     ],
     bootstrap: [AppComponent]
 })

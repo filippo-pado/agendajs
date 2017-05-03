@@ -6,19 +6,20 @@ var jwt = require('jsonwebtoken');
 //POST /authenticate
 
 //TODO: crypt PASSWORD
-
-/*Member.create({
-	 name: 'testUser',
-	 password: 'toBeHashed',
-	 admin: true
- }, function(err, member) {
-	 console.log(JSON.stringify(member));
+/*Member.remove({}, () => {});
+Member.create({
+    username: 'test',
+    password: 'test',
+    admin: false
+}, function(err, member) {
+    console.log(JSON.stringify(member));
 });*/
 
 module.exports = function(apiRoutes, app) {
     apiRoutes.post('/authenticate', function(req, res) {
+        console.log(req.body.username);
         Member.findOne({
-            name: req.body.name
+            username: req.body.username
         }, function(err, member) {
             if (err) res.status(500).send(err);
             if (!member) {
@@ -33,6 +34,7 @@ module.exports = function(apiRoutes, app) {
                     // return the information including token as JSON
                     res.json({
                         message: 'Authentication successful!',
+                        member: member,
                         token: token
                     });
                 }

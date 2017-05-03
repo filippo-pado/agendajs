@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
+import { HttpClientService } from '../../auth/http-client.service';
 import { Task } from './task.model';
 
 @Injectable()
@@ -11,7 +12,7 @@ export class TaskService {
     private headers = new Headers({ 'Content-Type': 'application/json' });
     private tasksUrl = '/api/tasks'; // URL to web api
 
-    constructor(private http: Http) {}
+    constructor(private http: HttpClientService) {}
 
     getTasks(): Promise < Task[] > {
         return this.http.get(this.tasksUrl)

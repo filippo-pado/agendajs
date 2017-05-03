@@ -5,7 +5,7 @@
             <form name="form" (ngSubmit)="loginForm.form.valid && login()" #loginForm="ngForm">
                 <div fxLayout="column">
                     <md-input-container fxFlex="grow">
-                        <input name='name' type='text' required mdInput placeholder='Nome' [(ngModel)]="member.name" #name="ngModel" />
+                        <input name='username' type='text' required mdInput placeholder='Username' [(ngModel)]="member.username" #username="ngModel" />
                     </md-input-container>
                     <md-input-container fxFlex="grow">
                         <input name='password' type='password' required mdInput placeholder='Password' [(ngModel)]="member.password " #password="ngModel" />

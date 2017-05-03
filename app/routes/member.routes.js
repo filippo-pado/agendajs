@@ -10,14 +10,6 @@ var Member = require('../models/member');
 
 //TODO: filter PASSWORD
 
- /*Member.create({
-	 name: 'testUser',
-	 password: 'toBeHashed',
-	 admin: true
- }, function(err, member) {
-	 console.log(JSON.stringify(member));
-});*/
-
 module.exports = function(apiRoutes) {
     apiRoutes.get('/members', function(req, res) {
         Member.find(function(err, members) {
@@ -49,5 +41,4 @@ module.exports = function(apiRoutes) {
             else res.json(member);
         });
     });
-
 };

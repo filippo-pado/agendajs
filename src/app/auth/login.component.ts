@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     login() {
         this.message = null;
         this.loading = true;
-        this.authService.login(this.member.name, this.member.password)
+        this.authService.login(this.member.username, this.member.password)
             .then(
                 success => {
                     this.router.navigate([this.returnUrl]);

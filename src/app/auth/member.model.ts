@@ -1,6 +1,6 @@
 export class Member {
     _id ? : string;
-    name: string;
+    username: string;
     password: string;
     admin: boolean;
 };
