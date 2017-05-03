@@ -3,10 +3,15 @@ module.exports = function(app) {
     var express = require('express'),
         apiRoutes = express.Router(),
         path = require('path');
-
-	//require('./populate.routes.js')(apiRoutes); //enable to repopulate DB
+	
+	//-------------------------------------------------------------
+	//UNPROTECTED ROUTES	
+	//require('./populate.routes.js')(apiRoutes); //enable to populate DB
     require('./authentication.routes.js')(apiRoutes, app);
     require('./protect.routes.js')(apiRoutes, app);
+	
+	//-------------------------------------------------------------
+	//PROTECTED ROUTES
     //require('./member.routes.js')(apiRoutes); //enable to allow member api updates
     require('./task.routes.js')(apiRoutes);
 
