@@ -4,9 +4,10 @@ module.exports = function(app) {
         apiRoutes = express.Router(),
         path = require('path');
 
+	//require('./populate.routes.js')(apiRoutes); //enable to repopulate DB
     require('./authentication.routes.js')(apiRoutes, app);
     require('./protect.routes.js')(apiRoutes, app);
-    //require('./member.routes.js')(apiRoutes);
+    //require('./member.routes.js')(apiRoutes); //enable to allow member api updates
     require('./task.routes.js')(apiRoutes);
 
     app.use('/api', apiRoutes);

@@ -8,10 +8,10 @@ var Member = require('../models/member');
 //DELETE /members:member_id
 //PUT /members:member_id
 
-//TODO: filter PASSWORD
+//TODO: filter PASSWORD and fields
 
 module.exports = function(apiRoutes) {
-    apiRoutes.get('/members', function(req, res) {
+    /*apiRoutes.get('/members', function(req, res) {
         Member.find(function(err, members) {
             if (err) res.status(500).send(err);
             else res.json(members);
@@ -40,5 +40,5 @@ module.exports = function(apiRoutes) {
             if (err) res.status(500).send(err);
             else res.json(member);
         });
-    });
+    });*/
 };

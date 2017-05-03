@@ -1,19 +1,10 @@
 'use strict';
 var Member = require('../models/member');
 var jwt = require('jsonwebtoken');
+var bcrypt = require('bcryptjs');
 
 //allowed authentication API
 //POST /authenticate
-
-//TODO: crypt PASSWORD
-/*Member.remove({}, () => {});
-Member.create({
-    username: 'test',
-    password: 'test',
-    admin: false
-}, function(err, member) {
-    console.log(JSON.stringify(member));
-});*/
 
 module.exports = function(apiRoutes, app) {
     apiRoutes.post('/authenticate', function(req, res) {
@@ -25,7 +16,8 @@ module.exports = function(apiRoutes, app) {
             if (!member) {
                 res.status(401).send('Authentication failed. User not found.');
             } else {
-                if (member.password != req.body.password) {
+				//if (member.password != req.body.password) {
+				if (!bcrypt.compareSync(req.body.password, member.password)){
                     res.status(401).send('Authentication failed. Wrong password.');
                 } else {
                     var token = jwt.sign(member, app.get('secret'), {
