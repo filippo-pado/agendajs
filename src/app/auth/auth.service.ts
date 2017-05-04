@@ -36,7 +36,7 @@ export class AuthService {
         return localStorage.getItem('token');
     }
     private handleError(error: any): Promise < any > {
-        console.error('An error occurred', error); // for demo purposes only
+        //console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error);
     };
 }

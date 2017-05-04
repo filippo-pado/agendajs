@@ -10,7 +10,7 @@ module.exports = function(apiRoutes, app) {
     apiRoutes.post('/authenticate', function(req, res) {
         console.log(req.body.username);
         Member.findOne({
-            username: req.body.username
+            username: req.body.username.toLowerCase()
         }, function(err, member) {
             if (err) res.status(500).send(err);
             if (!member) {

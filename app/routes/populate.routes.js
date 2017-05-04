@@ -13,7 +13,7 @@ module.exports = function(apiRoutes, app) {
 			Member.deleteOne({username: arrmember.username}, function(err, member) {
 				if (err) console.log("Error: "+err);
 				Member.create({
-						username: arrmember.username,
+						username: arrmember.username.toLowerCase(),
 						password: bcrypt.hashSync(arrmember.password, 10),
 						admin: false
 					}, function(err, member) {

@@ -1,14 +1,14 @@
 <div fxLayoutAlign="center">
     <md-card class="loginCard" fxFlex="grow">
         <md-card-content>
-            <div class="cardTitle">Login</div>
+            <div class="cardTitle">Accedi</div>
             <form name="form" (ngSubmit)="loginForm.form.valid && login()" #loginForm="ngForm">
                 <div fxLayout="column">
                     <md-input-container fxFlex="grow">
-                        <input name='username' type='text' required mdInput placeholder='Username' [(ngModel)]="member.username" #username="ngModel" />
+                        <input autofocus name='username' type='text' required mdInput placeholder='Username' [(ngModel)]="member.username"/>
                     </md-input-container>
                     <md-input-container fxFlex="grow">
-                        <input name='password' type='password' required mdInput placeholder='Password' [(ngModel)]="member.password " #password="ngModel" />
+                        <input name='password' type='password' required mdInput placeholder='Password' [(ngModel)]="member.password "/>
                     </md-input-container>
                     <button fxFlexAlign="center" class="primary" md-fab [disabled]="loading">Login</button>
                     <div class="report">
