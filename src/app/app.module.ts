@@ -10,10 +10,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './shared/not-found.component';
-import { AuthGuard } from './auth/auth.guard';
-import { AuthService } from './auth/auth.service';
+import { AuthGuard } from './shared/auth.guard';
+import { AuthService } from './shared/auth.service';
 //import { MemberService } from './auth/member.service';
-import { LoginComponent } from './auth/login.component';
+import { LoginComponent } from './auth/login/login.component';
 
 @NgModule({
     imports: [

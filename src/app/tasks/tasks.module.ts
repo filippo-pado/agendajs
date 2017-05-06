@@ -13,8 +13,8 @@ import { TaskFormComponent } from './shared/task-form/task-form.component';
 import { TaskService } from './shared/task.service';
 import { TaskUtilsService } from './shared/task-utils.service';
 import { UtilsService } from '../shared/utils.service';
+import { HttpClientService } from '../shared/http-client.service';
 import { TasksRoutingModule } from './tasks-routing.module';
-import { HttpClientService } from '../auth/http-client.service';
 
 
 @NgModule({

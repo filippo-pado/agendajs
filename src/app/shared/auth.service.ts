@@ -35,6 +35,10 @@ export class AuthService {
     getToken(): string {
         return localStorage.getItem('token');
     }
+	getMemberUsername(): string {
+		let member=JSON.parse(localStorage.getItem('currentMember'));
+		return member.username ? member.username : 'notLoggedIn';
+    }
     private handleError(error: any): Promise < any > {
         //console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error);

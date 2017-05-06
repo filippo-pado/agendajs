@@ -3,7 +3,7 @@ import { Headers } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { HttpClientService } from '../../auth/http-client.service';
+import { HttpClientService } from '../../shared/http-client.service';
 import { Task } from './task.model';
 
 @Injectable()
