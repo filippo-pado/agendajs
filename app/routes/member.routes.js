@@ -3,10 +3,14 @@ var Member = require('../models/member');
 
 //allowed member API
 //GET /members
-//POST /members
-//GET /members:member_id
-//DELETE /members:member_id
-//PUT /members:member_id
+//GET /members/:member_id
+
+//GET /members/:member_id/tasks
+//POST /members/:member_id/tasks
+//GET /members/:member_id/tasks:task_id
+//DELETE /members/:member_id/tasks:task_id
+//PUT /members/:member_id/tasks:task_id
+
 
 //TODO: filter PASSWORD and fields
 

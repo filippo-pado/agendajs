@@ -29,8 +29,6 @@ var taskSchema = new Schema({
         type: Date,
         default: null
     }
-}, {
-    collection: 'tasks'
 });
 
-module.exports = mongoose.model('Task', taskSchema);
+module.exports = taskSchema;

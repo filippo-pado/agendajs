@@ -12,9 +12,8 @@ module.exports = function(app) {
 	
 	//-------------------------------------------------------------
 	//PROTECTED ROUTES
-    //require('./member.routes.js')(apiRoutes); //enable to allow member api updates
-    require('./task.routes.js')(apiRoutes);
-
+    require('./member.routes.js')(apiRoutes); 
+	
     app.use('/api', apiRoutes);
 
     app.get('*', function(req, res) {

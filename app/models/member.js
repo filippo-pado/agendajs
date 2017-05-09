@@ -1,5 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
+var taskSchema = require('./task');
 var Schema = mongoose.Schema;
 
 var memberSchema = new Schema({
@@ -14,7 +15,8 @@ var memberSchema = new Schema({
     admin: {
         type: Boolean,
         default: false
-    }
+    },
+	tasks: [taskSchema]
 }, {
     collection: 'members'
 });
