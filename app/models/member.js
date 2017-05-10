@@ -1,6 +1,5 @@
 'use strict';
 var mongoose = require('mongoose');
-var taskSchema = require('./task');
 var Schema = mongoose.Schema;
 
 var memberSchema = new Schema({
@@ -10,15 +9,14 @@ var memberSchema = new Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        select: false
     },
     admin: {
         type: Boolean,
         default: false
     },
-	tasks: [taskSchema]
-}, {
-    collection: 'members'
+    tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
 });
 
 module.exports = mongoose.model('Member', memberSchema);

@@ -3,10 +3,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var taskSchema = new Schema({
-    owner: {
-        type: String, //john, joe, ecc
-        required: true
-    },
     description: {
         type: String,
         required: true
@@ -31,4 +27,4 @@ var taskSchema = new Schema({
     }
 });
 
-module.exports = taskSchema;
+module.exports = mongoose.model('Task', taskSchema);
