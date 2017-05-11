@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var taskSchema = new Schema({
+module.exports = new Schema({
     description: {
         type: String,
         required: true
@@ -26,5 +26,3 @@ var taskSchema = new Schema({
         default: null
     }
 });
-
-module.exports = mongoose.model('Task', taskSchema);

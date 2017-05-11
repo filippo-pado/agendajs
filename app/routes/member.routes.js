@@ -52,22 +52,34 @@ module.exports = function(apiRoutes) {
     apiRoutes.post('/members/:member_id/tasks', function(req, res) {
         Member.findById(req.params.member_id, function(err, member) {
             if (err) return handleError(res, 500, err);
-            Task.create(req.body, function(err, task) {
+            member.tasks.push(req.body);
+            var task = member.tasks[0];
+            member.save(function(err) {
                 if (err) return handleError(res, 500, err);
-                member.tasks.push(task._id);
-                member.save();
                 res.json(task);
             });
         });
     });
-    apiRoutes.get('/members/:member_id/tasks/:task_id', function(req, res) {
+    /*apiRoutes.get('/members/:member_id/tasks/:task_id', function(req, res) {
         Member.findById(req.params.member_id, function(err, member) {
             if (err) return handleError(res, 500, err);
             Task.findById(req.params.task_id, function(err, task) {
                 if (err) return handleError(res, 500, err);
-                if (member.tasks.indexOf(task._id) == -1) return handleError(res, 500, "Not a members's task!");
                 res.json(task);
             });
         });
     });
+    apiRoutes.put('/members/:member_id/tasks/:task_id', function(req, res) {
+        Task.findByIdAndUpdate(req.params.task_id, req.body, { new: true }, function(err, task) {
+            if (err) return handleError(res, 500, err);
+            res.json(task);
+        });
+    });
+    apiRoutes.delete('/members/:member_id/tasks/:task_id', function(req, res) {
+        Task.findByIdAndRemove(req.params.task_id, function(err, task) {
+            if (err) return handleError(res, 500, err);
+            res.json(task);
+        });
+    });*/
+
 };
