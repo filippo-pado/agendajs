@@ -2,7 +2,12 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-module.exports = new Schema({
+var taskSchema = new Schema({
+	owner: {
+		type: Schema.Types.ObjectId,
+		ref: 'Member',
+		required: true
+	},
     description: {
         type: String,
         required: true
@@ -26,3 +31,5 @@ module.exports = new Schema({
         default: null
     }
 });
+
+module.exports = mongoose.model('Task', taskSchema);

@@ -1,7 +1,7 @@
 'use strict';
-/*process.env.NODE_ENV = 'test'; //disable morgan console output
-let Task = require('../app/models/task');
-
+process.env.NODE_ENV = 'test'; //disable morgan console output
+let Member = require('../app/models/member');
+var bcrypt = require('bcryptjs');
 //Require the dev-dependencies
 let chai = require('chai');
 let chaiHttp = require('chai-http');
@@ -10,86 +10,62 @@ let assert = chai.assert;
 chai.use(chaiHttp);
 
 //Our parent block
-describe('Tasks', () => {
+describe('Member', () => {
     beforeEach((done) => { //Before each test we empty the database
-        Task.remove({}, () => {
+        Member.remove({}, () => {
             done();
         });
     });
-    describe('/GET /POST tasks', () => {
-        it('it should GET all the tasks', (done) => {
+    describe('/api/members GET/POST request', () => {
+        it('it should GET the members', (done) => {
             chai.request(server)
-                .get('/api/tasks')
+                .get('/api/members')
                 .end((err, res) => {
                     assert.equal(res.status, 200);
                     assert.isArray(res.body);
                     assert.equal(res.body.length, 0);
                     done();
                 });
-        });
-        it('it should not POST a task without description field', (done) => {
-            let task = {
-                owner: "John"
+        });        
+        it('it should POST a member with default fields', (done) => {
+            let member = {
+                username: 'Test',
+				password: 'test'
             };
             chai.request(server)
-                .post('/api/tasks')
-                .send(task)
+                .post('/api/members')
+                .send(member)
                 .end((err, res) => {
-                    assert(res.status === 500);
-                    assert.isObject(res.body);
-                    assert.isDefined(res.body.errors);
-                    assert.isDefined(res.body.errors.description);
-                    assert.equal(res.body.errors.description.kind, 'required');
+                    assert.equal(res.status, 200);
+                    assert.equal(res.body.username, 'test');
+					assert.equal(res.body.username, 'test');
+					assert.equal(bcrypt.compareSync('test', res.body.password), true);
+                    assert.equal(res.body.admin, false);
                     done();
                 });
         });
-        it('it should POST a task with default fields', (done) => {
-            let task = {
-                owner: "John",
-                description: "Buy cookies"
+		it('it should POST a task with default fields', (done) => {
+            let member = {
+                username: 'Test',
+				password: 'test'
             };
             chai.request(server)
-                .post('/api/tasks')
-                .send(task)
+                .post('/api/members')
+                .send(member)
                 .end((err, res) => {
-                    let today = (new Date()).toISOString().substring(0, 10);
-                    assert.equal(res.status, 200);
-                    assert.isObject(res.body);
-                    assert.equal(res.body.owner, 'John');
-                    assert.equal(res.body.description, 'Buy cookies');
-                    assert.equal(res.body.frequency, 'once');
-                    assert.include(res.body.taskDate, today);
-                    assert.equal(res.body.priority, '2');
-                    assert.isNull(res.body.doneDate);
-                    done();
-                });
-        });
-        it('it should POST a task with specified fields', (done) => {
-            let today = (new Date()).toISOString().substring(0, 10);
-            let task = {
-                owner: "John",
-                description: "Buy a lot of cookies",
-                frequency: 'weekly',
-                taskDate: today,
-                doneDate: '2017-03-20',
-                priority: 1
-            };
-            chai.request(server)
-                .post('/api/tasks')
-                .send(task)
-                .end((err, res) => {
-                    assert.equal(res.status, 200);
-                    assert.equal(res.body.owner, task.owner);
-                    assert.equal(res.body.description, task.description);
-                    assert.equal(res.body.frequency, task.frequency);
-                    assert.include(res.body.taskDate, task.taskDate);
-                    assert.equal(res.body.priority, task.priority);
-                    assert.include(res.body.doneDate, task.doneDate);
-                    done();
+					chai.request(server)
+						.post('/api/members/'+res.body._id+'/tasks')
+						.send({description: 'test'})
+						.end((err, res) => {
+							console.log(JSON.stringify(err, null, 2));
+							console.log(JSON.stringify(res.body, null, 2));
+							assert.equal(res.status, 200);							
+							done();
+						});
                 });
         });
     });
-    describe('/GET /PUT/ DELETE tasks/task_id', () => {
+    /*describe('/GET /PUT/ DELETE tasks/task_id', () => {
         it('it should GET a task by id', (done) => {
             Task.create({
                 owner: "John",
@@ -148,5 +124,5 @@ describe('Tasks', () => {
                     });
             });
         });
-    });
-});*/
+    });*/
+});

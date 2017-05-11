@@ -44,21 +44,18 @@ module.exports = function(apiRoutes) {
     });
 
     apiRoutes.get('/members/:member_id/tasks', function(req, res) {
-        Member.findById(req.params.member_id).populate('tasks').exec(function(err, member) {
+        Task.find({owner: req.params.member_id}, function(err, tasks) {
             if (err) return handleError(res, 500, err);
             res.json(member.tasks);
         });
     });
     apiRoutes.post('/members/:member_id/tasks', function(req, res) {
-        Member.findById(req.params.member_id, function(err, member) {
-            if (err) return handleError(res, 500, err);
-            member.tasks.push(req.body);
-            var task = member.tasks[0];
-            member.save(function(err) {
-                if (err) return handleError(res, 500, err);
-                res.json(task);
-            });
-        });
+		var newTask=req.body;
+		newTask.owner=req.params.member_id;
+        Task.create(newTask, function(err, task) {
+			if (err) res.status(500).send(err);
+			res.json(task);
+		});
     });
     /*apiRoutes.get('/members/:member_id/tasks/:task_id', function(req, res) {
         Member.findById(req.params.member_id, function(err, member) {

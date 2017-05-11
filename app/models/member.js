@@ -1,7 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var taskSchema = require('./task');
 
 var memberSchema = new Schema({
     username: {
@@ -17,7 +16,6 @@ var memberSchema = new Schema({
         type: Boolean,
         default: false
     },
-    tasks: [taskSchema]
 });
 
 module.exports = mongoose.model('Member', memberSchema);
