@@ -12,9 +12,10 @@ var handleError = require('./handleError');
 
 //GET   /members/:member_id/tasks
 //POST  /members/:member_id/tasks
+
 //GET   /members/:member_id/tasks/:task_id
-//DELETE /members/:member_id/tasks/:task_id
 //PUT   /members/:member_id/tasks/:task_id
+//DELETE /members/:member_id/tasks/:task_id
 
 module.exports = function(apiRoutes) {
     apiRoutes.get('/members', function(req, res) {
@@ -46,7 +47,7 @@ module.exports = function(apiRoutes) {
     apiRoutes.get('/members/:member_id/tasks', function(req, res) {
         Task.find({owner: req.params.member_id}, function(err, tasks) {
             if (err) return handleError(res, 500, err);
-            res.json(member.tasks);
+            res.json(tasks);
         });
     });
     apiRoutes.post('/members/:member_id/tasks', function(req, res) {
@@ -57,26 +58,22 @@ module.exports = function(apiRoutes) {
 			res.json(task);
 		});
     });
-    /*apiRoutes.get('/members/:member_id/tasks/:task_id', function(req, res) {
-        Member.findById(req.params.member_id, function(err, member) {
+    apiRoutes.get('/members/:member_id/tasks/:task_id', function(req, res) {
+        Task.findOne({owner: req.params.member_id, _id: req.params.task_id}, function(err, task) {
             if (err) return handleError(res, 500, err);
-            Task.findById(req.params.task_id, function(err, task) {
-                if (err) return handleError(res, 500, err);
-                res.json(task);
-            });
+            res.json(task);            
         });
     });
     apiRoutes.put('/members/:member_id/tasks/:task_id', function(req, res) {
-        Task.findByIdAndUpdate(req.params.task_id, req.body, { new: true }, function(err, task) {
+        Task.findOneAndUpdate({owner: req.params.member_id, _id: req.params.task_id}, req.body, { new: true }, function(err, task) {
             if (err) return handleError(res, 500, err);
             res.json(task);
         });
     });
     apiRoutes.delete('/members/:member_id/tasks/:task_id', function(req, res) {
-        Task.findByIdAndRemove(req.params.task_id, function(err, task) {
+        Task.findOneAndRemove({owner: req.params.member_id, _id: req.params.task_id}, function(err, task) {
             if (err) return handleError(res, 500, err);
             res.json(task);
         });
-    });*/
-
+    });
 };
