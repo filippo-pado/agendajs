@@ -6,13 +6,13 @@ module.exports = function(app) {
 
     //-------------------------------------------------------------
     //UNPROTECTED ROUTES    
-    //require('./populate.routes.js')(apiRoutes); //enable to populate DB
     require('./authentication.routes.js')(apiRoutes, app);
     //require('./protect.routes.js')(apiRoutes, app);
 
     //-------------------------------------------------------------
     //PROTECTED ROUTES
     require('./member.routes.js')(apiRoutes);
+	require('./task.routes.js')(apiRoutes);
 
     app.use('/api', apiRoutes);
 
