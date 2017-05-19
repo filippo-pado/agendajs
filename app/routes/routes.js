@@ -7,10 +7,10 @@ module.exports = function(app) {
     //-------------------------------------------------------------
     //UNPROTECTED ROUTES    
     require('./authentication.routes.js')(apiRoutes, app);
-    //require('./protect.routes.js')(apiRoutes, app);
+    require('./protect.routes.js')(apiRoutes, app);
 
     //-------------------------------------------------------------
-    //PROTECTED ROUTES
+    //PROTECTED ROUTES - have req.member decoded if logged in	
     require('./member.routes.js')(apiRoutes);
 	require('./task.routes.js')(apiRoutes);
 
