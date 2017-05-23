@@ -4,5 +4,11 @@
 .homelink{
 	font-size: 25px;
 	padding: 4px;
+	margin-right: 20px;
+	color: white;
+}
+.toolbarlink{
+	font-size: 18px;
+	padding: 4px;
 	color: white;
 }
