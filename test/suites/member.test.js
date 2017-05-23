@@ -1,9 +1,9 @@
 'use strict';
 let Task = require('../../app/models/task');
 let Member = require('../../app/models/member');
-var bcrypt = require('bcryptjs');
+let bcrypt = require('bcryptjs');
 
-var common = require('../common');
+let common = require('../common');
 let assert = common.assert;
 let chai = common.chai;
 let server = common.server;
@@ -19,7 +19,7 @@ describe('Member api', () => {
     });
     describe('route /api/members', () => {
         let token = null;
-        before((done) => { //Before each test we empty the database
+        before((done) => {
             Member.create({ username: 'test', password: bcrypt.hashSync('test', 10) }, (err, member) => {
                 if (err) console.log(err);
                 chai.request(server)

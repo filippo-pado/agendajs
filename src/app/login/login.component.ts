@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../shared/auth.service';
-import { Member } from '../shared/member.model';
+import { AuthService } from '../shared/auth/auth.service';
+import { Member } from '../shared/auth/member.model';
 
 @Component({
     templateUrl: './login.component.html',
@@ -10,7 +10,7 @@ import { Member } from '../shared/member.model';
 
 export class LoginComponent implements OnInit {
     member: Member = new Member();
-    loading = false;
+    loading: boolean = false;
     returnUrl: string;
     message: string;
 

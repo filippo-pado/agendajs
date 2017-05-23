@@ -11,7 +11,9 @@ describe('Unit test', function() {
     require('./suites/authentication.test');
     require('./suites/member.test');
     require('./suites/task.test');
-    after(function() {
+    after((done) => {
         //console.log('after all tests');
+        require('./populate/populate.test');
+        done();
     });
 });

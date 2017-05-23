@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { PageNotFoundComponent } from './shared/not-found.component';
-import { AuthGuard } from './shared/auth.guard';
-import { LoginComponent } from './auth/login/login.component';
+import { AuthGuard } from './shared/auth/auth.guard';
+import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [{
     path: 'tasks',

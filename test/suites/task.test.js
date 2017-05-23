@@ -17,7 +17,7 @@ describe('Task api', () => {
             });
         });
     });
-    describe('route /api/members/:member_id/tasks', () => {
+    describe('route /api/tasks', () => {
         let testMemberId = null;
         let token = null;
         before((done) => {
@@ -38,7 +38,7 @@ describe('Task api', () => {
         });
         it('test GET request', (done) => {
             chai.request(server)
-                .get('/api/members/' + testMemberId + '/tasks')
+                .get('/api/tasks')
                 .set('x-access-token', token)
                 .end((err, res) => {
                     assert.equal(res.status, 200);
@@ -52,11 +52,10 @@ describe('Task api', () => {
         });
         it('test POST request', (done) => {
             let task = {
-                owner: testMemberId,
                 description: 'test'
             };
             chai.request(server)
-                .post('/api/members/' + testMemberId + '/tasks')
+                .post('/api/tasks')
                 .set('x-access-token', token)
                 .send(task) //todo: test other fields
                 .end((err, res) => {
@@ -91,7 +90,7 @@ describe('Task api', () => {
         });
         it('test GET request', (done) => {
             chai.request(server)
-                .get('/api/members/' + testMemberId + '/tasks/' + testTaskId)
+                .get('/api/tasks/' + testTaskId)
                 .set('x-access-token', token)
                 .end((err, res) => {
                     assert.equal(res.status, 200);
@@ -107,7 +106,7 @@ describe('Task api', () => {
                 description: 'edited'
             };
             chai.request(server)
-                .put('/api/members/' + testMemberId + '/tasks/' + testTaskId)
+                .put('/api/tasks/' + testTaskId)
                 .set('x-access-token', token)
                 .send(task) //todo: test other fields
                 .end((err, res) => {
@@ -121,7 +120,7 @@ describe('Task api', () => {
         });
         it('test DELETE request', (done) => {
             chai.request(server)
-                .delete('/api/members/' + testMemberId + '/tasks/' + testTaskId)
+                .delete('/api/tasks/' + testTaskId)
                 .set('x-access-token', token)
                 .end((err, res) => {
                     assert.equal(res.status, 200);

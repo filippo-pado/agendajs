@@ -18,14 +18,18 @@ module.exports = function(apiRoutes, app) {
                 if (!bcrypt.compareSync(req.body.password, member.password)) {
                     res.status(401).send('Authentication failed. Wrong password.');
                 } else {
-                    member.password = undefined; //don't send password field
-                    var token = jwt.sign(member, app.get('secret'), {
+                    let memberToSend = {
+                        _id: member._id,
+                        username: member.username,
+                        admin: member.admin
+                    };
+                    var token = jwt.sign(memberToSend, app.get('secret'), {
                         expiresIn: 1440 // expires in 24 hours
                     });
                     // return the information including token as JSON                   
                     res.json({
                         message: 'Authentication successful!',
-                        member: member,
+                        member: memberToSend,
                         token: token
                     });
                 }

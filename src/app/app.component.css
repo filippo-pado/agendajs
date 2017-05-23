@@ -1,0 +1,8 @@
+.spacer {
+    flex: 1 1 auto;
+}
+.homelink{
+	font-size: 25px;
+	padding: 4px;
+	color: white;
+}

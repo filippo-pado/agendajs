@@ -3,7 +3,7 @@ import { Headers } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { HttpClientService } from '../../shared/http-client.service';
+import { HttpClientService } from '../../shared/auth/http-client.service';
 import { Task } from './task.model';
 
 @Injectable()
@@ -17,7 +17,9 @@ export class TaskService {
     getTasks(): Promise < Task[] > {
         return this.http.get(this.tasksUrl)
             .toPromise()
-            .then(response => this.deserializeTasks(response.json()) as Task[])
+            .then(response => {
+                return this.deserializeTasks(response.json()) as Task[]
+            })
             .catch(this.handleError);
     };
     getTask(id: string): Promise < Task > {
