@@ -14,6 +14,7 @@ import { AuthGuard } from './shared/auth/auth.guard';
 import { AuthService } from './shared/auth/auth.service';
 //import { MemberService } from './auth/member.service';
 import { LoginComponent } from './login/login.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import { LoginComponent } from './login/login.component';
     declarations: [
         AppComponent,
         PageNotFoundComponent,
-        LoginComponent
+        LoginComponent,
+		ToolbarComponent
     ],
     providers: [
         AuthGuard,

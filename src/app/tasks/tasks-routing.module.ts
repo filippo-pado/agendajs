@@ -10,7 +10,7 @@ const tasksRoutes: Routes = [
 		path: '', 
 		component: TasksComponent,
 		children: [
-			{ path: 'dashboard', component: DashboardComponent },
+			{ path: '', component: DashboardComponent },
 			{ path: 'full-list', component: FullListComponent }
 		]
 	}
