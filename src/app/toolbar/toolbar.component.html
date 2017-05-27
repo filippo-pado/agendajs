@@ -1,7 +1,7 @@
 <md-toolbar color='primary' class='mat-elevation-z6'>
     <a md-button routerLink='/tasks' class='homelink'>AgendaJS</a>
-    <a md-button routerLink='/tasks' class='toolbarlink'>Impegni</a>
-    <a md-button routerLink='/shoplists' class='toolbarlink'>Liste</a>
+    <a *ngIf='loggedIn | async' md-button routerLink='/tasks' class='toolbarlink'>Impegni</a>
+    <a *ngIf='loggedIn | async' md-button routerLink='/shoplists' class='toolbarlink'>Liste</a>
     <span class='spacer'></span>
-    <a color='accent' md-raised-button routerLink='/login'>Logout</a>
+    <a *ngIf='loggedIn | async' color='accent' md-raised-button routerLink='/login'>Logout</a>
 </md-toolbar>

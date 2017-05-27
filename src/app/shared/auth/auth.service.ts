@@ -7,7 +7,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class AuthService {
     private authUrl: string = '/api/authenticate';
-	private loggedIn: Subject<boolean> = new Subject<boolean>();
+    private loggedIn: Subject < boolean > = new Subject < boolean > ();
 
     // make isLoggedIn public readonly
     get isLoggedIn() {
@@ -26,6 +26,7 @@ export class AuthService {
                     // store member details and jwt token in local storage to keep member logged in between page refreshes
                     localStorage.setItem('currentMember', JSON.stringify(member));
                     localStorage.setItem('token', token);
+                    this.loggedIn.next(true);
                 } else {
                     return Promise.reject('No token or member provided');
                 }
@@ -37,6 +38,7 @@ export class AuthService {
         // remove member from local storage to log user out
         localStorage.removeItem('currentMember');
         localStorage.removeItem('token');
+        this.loggedIn.next(false);
     }
     getToken(): string {
         return localStorage.getItem('token');
