@@ -1,6 +1,6 @@
 <task-form [actionToPerform]="taskForm.actionToPerform" [task]="taskForm.task" (taskUpdated)="taskUpdated($event)">>
 </task-form>
-<md-card *ngFor='let table of tables'>
+<!--<md-card>
     <md-card-content fxLayout="column">
         <div class='cardTitle'>
             <button md-fab>
@@ -48,3 +48,57 @@
         </div>
     </md-card-content>
 </md-card>
+-->
+<div fxLayout="row">
+	<md-card fxFlex='50%'>
+		<md-card-content>
+			<md-list>
+				<h1 md-subheader>Title</h1>
+				<md-list-item>
+					<md-icon md-list-icon>folder</md-icon>
+					<h4 md-line>Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h4>
+					<p md-line>Date</p>
+				</md-list-item>
+				<md-list-item>
+					<md-icon md-list-icon>folder</md-icon>
+					<h4 md-line>Description</h4>
+					<p md-line>Date</p>
+				</md-list-item>
+				<md-list-item>
+					<md-icon md-list-icon>folder</md-icon>
+					<h4 md-line>Description</h4>
+					<p md-line>Date</p>
+				</md-list-item>
+				<md-divider></md-divider>
+				<h2 md-subheader>Title</h2>
+				<md-list-item>
+					<md-icon md-list-icon>folder</md-icon>
+					<h4 md-line>Description</h4>
+					<p md-line>Date</p>
+				</md-list-item>
+				<md-list-item>
+					<md-icon md-list-icon>folder</md-icon>
+					<h4 md-line>Description</h4>
+					<p md-line>Date</p>
+				</md-list-item>
+			</md-list>
+		</md-card-content>
+	</md-card>
+	<md-card fxFlex='50%'>
+		<md-card-content>
+		   
+		</md-card-content>
+	</md-card>
+</div>
+<div fxLayout="row">
+	<md-card fxFlex='50%'>
+		<md-card-content>
+		   
+		</md-card-content>
+	</md-card>
+	<md-card fxFlex='50%'>
+		<md-card-content>
+		   
+		</md-card-content>
+	</md-card>
+</div>
