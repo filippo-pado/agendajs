@@ -55,9 +55,13 @@
 			<md-list>
 				<h1 md-subheader>Title</h1>
 				<md-list-item>
-					<md-icon md-list-icon>folder</md-icon>
-					<h4 md-line>Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h4>
+					<md-checkbox md-list-icon [(ngModel)]="checked"></md-checkbox>
+					<h4 md-line (click)="showToggle()">Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h4>
 					<p md-line>Date</p>
+					<div md-line *ngIf="showFull">
+						<button md-raised-button color='accent'>Modifica</button>
+						<button md-raised-button color='warn'>Elimina</button>						
+					</div>
 				</md-list-item>
 				<md-list-item>
 					<md-icon md-list-icon>folder</md-icon>

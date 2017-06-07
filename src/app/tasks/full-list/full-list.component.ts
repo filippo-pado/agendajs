@@ -11,6 +11,12 @@ import { TaskUtilsService } from '../shared/task-utils.service';
     styleUrls: ['./full-list.component.css']
 })
 export class FullListComponent implements OnInit {
+	checked: boolean=true;
+	showFull: boolean=false;
+	showToggle(){
+		this.showFull=!this.showFull;
+	}
+	
     taskForm = { actionToPerform: 'create', task: new Task() };
     taskLists: any = { 'todo': [], 'done': [] };
     orderField: string = 'description';
