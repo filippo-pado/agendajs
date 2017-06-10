@@ -59,7 +59,7 @@
 						<div (click)="item.showFull=!item.showFull">
 							<div *ngIf="!item.showFull" class="description-wrapped description">{{item.description}}</div>
 							<div *ngIf="item.showFull" class="description">{{item.description}}</div>
-							<div><md-icon>assignment turned in</md-icon><span>{{item.todoDate}}</span> {{item.doneDate}}</div>
+							<div><md-icon class='date-icon'>assignment</md-icon> {{item.todoDate}} &nbsp;&nbsp;&nbsp; <md-icon class='date-icon'>assignment_turned_in</md-icon> {{item.doneDate}}</div>
 						</div>
 						<div *ngIf="item.showFull" style="text-align: center;">
 							<button md-icon-button><md-icon>edit</md-icon></button>
