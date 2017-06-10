@@ -11,6 +11,11 @@ import { TaskUtilsService } from '../shared/task-utils.service';
     styleUrls: ['./full-list.component.css']
 })
 export class FullListComponent implements OnInit {
+	list=[{description: 'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', doneDate: '2017-06-10', todoDate: '2017-06-11'},
+		{description: 'Task 2', doneDate: '2017-06-10', todoDate: '2017-06-11'},
+		{description: 'Task 3', doneDate: '2017-06-10', todoDate: '2017-06-11'}
+	];
+	
 	checked: boolean=true;
 	showFull: boolean=false;
 	showToggle(){
