@@ -7,14 +7,19 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class AuthService {
     private authUrl: string = '/api/authenticate';
+	
+	//change to behavioursubject
     private loggedIn: Subject < boolean > = new Subject < boolean > ();
 
     // make isLoggedIn public readonly
     get isLoggedIn() {
         return this.loggedIn.asObservable();
     }
-    constructor(private http: Http) {}
-
+    constructor(private http: Http) {
+		if (localStorage.getItem('currentMember') && localStorage.getItem('token')){
+			this.loggedIn.next(true);
+		}
+	};	
     login(username: string, password: string): Promise < any > {
         return this.http.post(this.authUrl, { username: username, password: password })
             .toPromise()

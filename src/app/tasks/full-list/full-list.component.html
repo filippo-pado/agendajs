@@ -1,69 +1,21 @@
 <task-form [actionToPerform]="taskForm.actionToPerform" [task]="taskForm.task" (taskUpdated)="taskUpdated($event)">>
 </task-form>
-<!--<md-card>
-    <md-card-content fxLayout="column">
-        <div class='cardTitle'>
-            <button md-fab>
-                <md-icon>{{table.tableIcon}}</md-icon>
-            </button>
-            {{table.title}}
-        </div>
-        <div class="table-row header" fxLayout="row" fxLayout.xs="column">
-            <div class="icon"></div>
-            <div class="description" fxFlex="grow" [ngStyle.xs]="{'text-align': 'center'}">Descrizione</div>
-            <div fxLayout="row" fxLayout.sm="column" fxFlexAlign="center">
-                <div class="text">Data</div>
-                <div class="text">Periodicità</div>
-            </div>
-            <div class="buttons"></div>
-        </div>
-        <div class="table-row" fxLayout="row" fxLayout.xs="column" *ngFor='let task of taskLists[table.list]'>
-            <div fxFlexAlign="center">
-                <div class="icon">
-                    <md-icon *ngIf='task.priority==1'>snooze</md-icon>
-                    <md-icon *ngIf='task.priority==2'>note</md-icon>
-                    <md-icon *ngIf='task.priority==3'>priority_high</md-icon>
-                </div>
-            </div>
-            <div class="description" fxFlex="grow" fxFlexAlign.gt-xs="center" [ngStyle.xs]="{'text-align': 'center'}">{{task.description}}</div>
-            <div fxLayout="row" fxLayout.sm="column" fxFlexAlign="center">
-                <div class="text">{{task.doneDate | date:'yyyy-MM-dd'}}</div>
-                <div class="text">{{task.taskDate | date:'yyyy-MM-dd'}}</div>
-                <div class="text">{{frequencyMap[task.frequency]}}</div>
-            </div>
-            <div class="buttons">
-                <button md-mini-fab color='primary' *ngIf='table.action=="checkTask"' (click)='checkTask(task)'>
-                    <md-icon>check</md-icon>
-                </button>
-                <button md-mini-fab color='primary' *ngIf='table.action=="uncheckTask"' (click)='uncheckTask(task)'>
-                    <md-icon>clear</md-icon>
-                </button>
-                <button md-mini-fab color='accent' (click)='editTask(task)'>
-                    <md-icon>edit</md-icon>
-                </button>
-                <button md-mini-fab color='warn' (click)='deleteTask(task)'>
-                    <md-icon>delete</md-icon>
-                </button>
-            </div>
-        </div>
-    </md-card-content>
-</md-card>
--->
 <div fxLayout="row">
 	<div fxFlex='50%'>
 		<md-card>
 			<md-card-content>
-				<div fxLayout="row" class="list-item" *ngFor='let item of list'>
-					<div fxFlex='10%'><md-checkbox md-list-icon [(ngModel)]="item.checked"></md-checkbox></div>
-					<div fxFlex='90%' fxLayout="column">
-						<div (click)="item.showFull=!item.showFull">
-							<div *ngIf="!item.showFull" class="description-wrapped description">{{item.description}}</div>
-							<div *ngIf="item.showFull" class="description">{{item.description}}</div>
-							<div><md-icon class='date-icon'>assignment</md-icon> {{item.todoDate}} &nbsp;&nbsp;&nbsp; <md-icon class='date-icon'>assignment_turned_in</md-icon> {{item.doneDate}}</div>
+				<h2>Da fare</h2>
+				<div fxLayout="row" class="list-task" *ngFor='let task of taskLists.todo'>
+					<div fxFlex='40px'><md-checkbox md-list-icon [(ngModel)]="task.checked"></md-checkbox></div>
+					<div fxFlex='calc(100%-40px)' fxLayout="column">
+						<div (click)="task.showFull=!task.showFull">
+							<div *ngIf="!task.showFull" class="description-wrapped description">{{task.description}}</div>
+							<div *ngIf="task.showFull" class="description">{{task.description}}</div>
+							<div class='date-row'><md-icon class='date-icon'>assignment</md-icon> {{task.taskDate | date:'yyyy-MM-dd'}} &nbsp;&nbsp;&nbsp; <span *ngIf='task.doneDate'><md-icon class='date-icon'>assignment_turned_in</md-icon> {{task.doneDate | date:'yyyy-MM-dd'}}</span></div>
 						</div>
-						<div *ngIf="item.showFull" style="text-align: center;">
-							<button md-icon-button><md-icon>edit</md-icon></button>
-							<button md-icon-button><md-icon>delete</md-icon></button>		
+						<div *ngIf="task.showFull" style="text-align: center;">
+							<button md-icon-button><md-icon color='primary'>edit</md-icon></button>
+							<button md-icon-button><md-icon color='warn'>delete</md-icon></button>		
 						</div>
 					</div>				
 				</div>
@@ -71,25 +23,24 @@
 		</md-card>
 	</div>
 	<div fxFlex='50%'>
-	<md-card>
-		<md-card-content>
-		   
-		</md-card-content>
-	</md-card>
-	</div>
-</div>
-<div fxLayout="row">
-	<div fxFlex='50%'>
-		<md-card >
-			<md-card-content>
-			   
+		<md-card>
+			<md-card-content>	  
+				<h2>Fatti</h2>
+				<div fxLayout="row" class="list-task" *ngFor='let task of taskLists.done'>
+					<div fxFlex='40px'><md-checkbox md-list-icon [(ngModel)]="task.checked"></md-checkbox></div>
+					<div fxFlex='calc(100%-40px)' fxLayout="column">
+						<div (click)="task.showFull=!task.showFull">
+							<div *ngIf="!task.showFull" class="description-wrapped description">{{task.description}}</div>
+							<div *ngIf="task.showFull" class="description">{{task.description}}</div>
+							<div class='date-row'><md-icon class='date-icon'>assignment</md-icon> {{task.todoDate}} &nbsp;&nbsp;&nbsp; <md-icon class='date-icon'>assignment_turned_in</md-icon> {{task.doneDate}}</div>
+						</div>
+						<div *ngIf="task.showFull" style="text-align: center;">
+							<button md-icon-button><md-icon color='primary'>edit</md-icon></button>
+							<button md-icon-button><md-icon color='warn'>delete</md-icon></button>		
+						</div>
+					</div>				
+				</div>
 			</md-card-content>
 		</md-card>
 	</div>
-	<div fxFlex='50%'>
-	<md-card>
-		<md-card-content>
-		   
-		</md-card-content>
-	</md-card>
 </div>
