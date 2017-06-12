@@ -1,25 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class AuthService {
     private authUrl: string = '/api/authenticate';
-	
-	//change to behavioursubject
-    private loggedIn: Subject < boolean > = new Subject < boolean > ();
+    private loggedIn: BehaviorSubject < boolean > = new BehaviorSubject < boolean > (false);
 
     // make isLoggedIn public readonly
-    get isLoggedIn() {
+    get isLoggedIn(): boolean {
+        return this.loggedIn.getValue();
+    }
+    get loginObserver(): Observable < boolean > {
         return this.loggedIn.asObservable();
     }
     constructor(private http: Http) {
-		if (localStorage.getItem('currentMember') && localStorage.getItem('token')){
-			this.loggedIn.next(true);
-		}
-	};	
+        if (localStorage.getItem('currentMember') && localStorage.getItem('token')) {
+            this.loggedIn.next(true);
+        }
+    };
     login(username: string, password: string): Promise < any > {
         return this.http.post(this.authUrl, { username: username, password: password })
             .toPromise()

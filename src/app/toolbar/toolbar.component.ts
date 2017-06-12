@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../shared/auth/auth.service';
@@ -10,11 +10,11 @@ import { AuthService } from '../shared/auth/auth.service';
 })
 
 export class ToolbarComponent implements OnInit {
-    private loggedIn: Observable < boolean > ;
+    private loginObserver: Observable < boolean > ;
 
     constructor(private auth: AuthService) {}
-	
-	ngOnInit(): void {
-        this.loggedIn = this.auth.isLoggedIn;
+
+    ngOnInit(): void {
+        this.loginObserver = this.auth.loginObserver;
     };
 }
