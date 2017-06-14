@@ -10,7 +10,8 @@
                     <md-input-container fxFlex="grow">
                         <input name='password' type='password' required mdInput placeholder='Password' [(ngModel)]="member.password "/>
                     </md-input-container>
-                    <button fxFlexAlign="center" class="primary" md-fab [disabled]="loading">Login</button>
+                    <button fxFlexAlign="center" color="accent" md-fab [disabled]="loading">Login</button>
+					<button fxFlexAlign="center" style="margin: 10px;" (click)='testerLogin()' color="primary" md-raised-button [disabled]="loading">Accedi come tester</button>
                     <div class="report">
                         <md-progress-bar *ngIf="loading" mode="indeterminate"></md-progress-bar>
                         <div *ngIf='message' class="message">{{message}}</div>

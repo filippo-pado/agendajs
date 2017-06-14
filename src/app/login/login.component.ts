@@ -40,4 +40,9 @@ export class LoginComponent implements OnInit {
                 }
             );
     }
+	testerLogin(){
+		this.member.username='test';
+		this.member.password='test';
+		this.login();
+	}
 }
