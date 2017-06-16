@@ -1,20 +1,25 @@
 .description-wrapped {
     white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.description{
-	font-size: 16px;
-	font-weight: 400;
-	padding-bottom: 5px;
+
+.description {
+    font-size: 16px;
+    font-weight: 400;
+    padding-bottom: 5px;
+    overflow-wrap: break-word;
 }
-.list-item{
-	padding-top: 10px;
-	padding-bottom: 10px;
+
+.list-item {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
-.date-icon{
-	vertical-align: middle;
+
+.date-icon {
+    vertical-align: middle;
 }
-.date-row{
-	color: dimgray;
+
+.date-row {
+    color: dimgray;
 }
