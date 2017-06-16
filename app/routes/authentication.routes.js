@@ -24,7 +24,7 @@ module.exports = function(apiRoutes, app) {
                         admin: member.admin
                     };
                     var token = jwt.sign(memberToSend, app.get('secret'), {
-                        expiresIn: 1440 // expires in 24 hours
+                        expiresIn: '24h' // expires in 24 hours
                     });
                     // return the information including token as JSON                   
                     res.json({

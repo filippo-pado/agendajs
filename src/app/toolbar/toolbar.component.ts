@@ -10,7 +10,7 @@ import { AuthService } from '../shared/auth/auth.service';
 })
 
 export class ToolbarComponent implements OnInit {
-    private loginObserver: Observable < boolean > ;
+    public loginObserver: Observable < boolean > ;
 
     constructor(private auth: AuthService) {}
 

@@ -14,7 +14,7 @@
                             <div *ngIf="!task.showFull" class="description-wrapped description">{{task.description}}</div>
                             <div *ngIf="task.showFull" class="description">{{task.description}}</div>
                             <div class='date-row'>
-                                <md-icon class='date-icon'>assignment</md-icon> {{task.taskDate | date:'yyyy-MM-dd'}} &nbsp;&nbsp;&nbsp; <span *ngIf='task.doneDate'><md-icon class='date-icon'>assignment_turned_in</md-icon> {{task.doneDate | date:'yyyy-MM-dd'}}</span>
+                                <md-icon class='date-icon'>assignment</md-icon> {{task.taskDate | date:'yyyy-MM-dd' | frequency: task.frequency}} &nbsp;&nbsp;&nbsp; <span *ngIf='task.doneDate'><md-icon class='date-icon'>assignment_turned_in</md-icon> {{task.doneDate | date:'yyyy-MM-dd'}}</span>
                             </div>
                         </div>
                     </div>

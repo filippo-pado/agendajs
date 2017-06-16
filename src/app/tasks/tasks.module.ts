@@ -15,7 +15,7 @@ import { TaskUtilsService } from './shared/task-utils.service';
 import { UtilsService } from '../shared/utils.service';
 import { HttpClientService } from '../shared/auth/http-client.service';
 import { TasksRoutingModule } from './tasks-routing.module';
-
+import { FrequencyPipe } from './shared/frequency.pipe'
 
 @NgModule({
     imports: [
@@ -31,8 +31,10 @@ import { TasksRoutingModule } from './tasks-routing.module';
         TasksComponent,
         DashboardComponent,
         FullListComponent,
-        TaskFormComponent
+        TaskFormComponent,
+		FrequencyPipe
     ],
     providers: [TaskService, UtilsService, TaskUtilsService, HttpClientService]
 })
 export class TasksModule {}
+
