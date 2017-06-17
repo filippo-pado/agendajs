@@ -8,7 +8,8 @@ import 'rxjs/add/operator/toPromise';
 export class AuthService {
     private authUrl: string = '/api/authenticate';
     private loggedIn: BehaviorSubject < boolean > = new BehaviorSubject < boolean > (false);
-
+	private token: string;
+	
     // make isLoggedIn public readonly
     get isLoggedIn(): boolean {
         return this.loggedIn.getValue();
@@ -19,6 +20,7 @@ export class AuthService {
     constructor(private http: Http) {
         if (localStorage.getItem('currentMember') && localStorage.getItem('token')) {
             this.loggedIn.next(true);
+			this.token=localStorage.getItem('token');
         }
     };
     login(username: string, password: string): Promise < any > {
@@ -32,6 +34,7 @@ export class AuthService {
                     // store member details and jwt token in local storage to keep member logged in between page refreshes
                     localStorage.setItem('currentMember', JSON.stringify(member));
                     localStorage.setItem('token', token);
+					this.token=token;
                     this.loggedIn.next(true);
                 } else {
                     return Promise.reject('No token or member provided');
@@ -42,12 +45,13 @@ export class AuthService {
 
     logout(): void {
         // remove member from local storage to log user out
+		this.token=null;
         localStorage.removeItem('currentMember');
         localStorage.removeItem('token');
         this.loggedIn.next(false);
     }
     getToken(): string {
-        return localStorage.getItem('token');
+        return this.token;
     }
     getMember(): string {
         return JSON.parse(localStorage.getItem('currentMember'));

@@ -5,9 +5,10 @@
         <md-card>
             <md-card-content>
                 <h2>{{list.title}}</h2>
-                <div fxLayout="row" class="list-task" *ngFor='let task of taskLists[list.list]'>
-                    <div fxFlex='40px'>
-                        <md-checkbox md-list-icon [(ngModel)]="task.checked"></md-checkbox>
+                <div fxLayout="row" class="list-item" *ngFor='let task of taskLists[list.list]'>
+                    <div fxFlex='40px' fxLayoutAlign='base center'>						
+                        <md-checkbox *ngIf="list.list=='todo'" (click)='checkTask(task)'></md-checkbox>
+						<md-checkbox checked *ngIf="list.list=='done'" (click)='uncheckTask(task)'></md-checkbox>
                     </div>
                     <div fxFlex='calc(100%-140px)' fxLayout="column">
                         <div (click)="task.showFull=!task.showFull">
@@ -18,7 +19,7 @@
                             </div>
                         </div>
                     </div>
-                    <div fxFlex='80px' fxLayout='row'>
+                    <div fxFlex='80px' fxLayout='row' fxLayoutAlign='base center'>
                         <button md-icon-button>
                             <md-icon color='primary'>edit</md-icon>
                         </button>

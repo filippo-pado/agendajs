@@ -18,7 +18,7 @@ export class HttpClientService {
     }
     delete(url: string, headers: any) {
         this.appendToken(headers);
-        return this.http.post(url, headers);
+        return this.http.delete(url, headers);
     }
     post(url: string, data: any, headers: any) {
         this.appendToken(headers);
@@ -26,6 +26,6 @@ export class HttpClientService {
     }
     put(url: string, data: any, headers: any) {
         this.appendToken(headers);
-        return this.http.post(url, data, headers);
+        return this.http.put(url, data, headers);
     }
 }

@@ -3,7 +3,7 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose'); // mongoose for mongodb
-var morgan = require('morgan'); // log requests to the console (express4)
+//var morgan = require('morgan'); // log requests to the console (express4)
 var bodyParser = require('body-parser'); // pull information from HTML POST (express4)
 
 // configuration ==================================================
@@ -15,9 +15,9 @@ mongoose.connect(database.url, function(err) {
 });
 app.use(express.static(__dirname + '/dist'));
 app.use(bodyParser.json());
-if (process.env.NODE_ENV !== 'test') {
+/*if (process.env.NODE_ENV !== 'test') {
     app.use(morgan('combined')); //use morgan to log at command line 'combined' outputs the Apache style LOGs
-}
+}*/
 
 // routes =========================================================
 require('./app/routes/routes')(app);
