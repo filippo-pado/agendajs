@@ -8,7 +8,7 @@
                 <div fxLayout="row" class="list-item" *ngFor='let task of taskLists[list.list]'>
                     <div fxFlex='40px' fxLayoutAlign='base center'>						
                         <md-checkbox *ngIf="list.list=='todo'" (click)='checkTask(task)'></md-checkbox>
-						<md-checkbox checked *ngIf="list.list=='done'" (click)='uncheckTask(task)'></md-checkbox>
+						<md-checkbox [checked]="true" *ngIf="list.list=='done'" (click)='uncheckTask(task)'></md-checkbox>
                     </div>
                     <div fxFlex='calc(100%-140px)' fxLayout="column">
                         <div (click)="task.showFull=!task.showFull">
