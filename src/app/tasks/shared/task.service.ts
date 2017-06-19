@@ -32,7 +32,7 @@ export class TaskService {
 
     delete(id: string): Promise < void > {
         const url = `${this.tasksUrl}/${id}`;
-        return this.http.delete(url, { headers: this.headers })
+        return this.http.delete(url)
             .toPromise()
             .then(() => null)
             .catch(this.handleError);
@@ -40,7 +40,7 @@ export class TaskService {
 
     create(task: Task): Promise < Task > {
         return this.http
-            .post(this.tasksUrl, JSON.stringify(task), { headers: this.headers })
+            .post(this.tasksUrl, JSON.stringify(task))
             .toPromise()
             .then(res => this.deserializeTask(res.json()) as Task)
             .catch(this.handleError);
@@ -49,7 +49,7 @@ export class TaskService {
     update(id: string, updates: any): Promise < Task > {
         const url = `${this.tasksUrl}/${id}`;
         return this.http
-            .put(url, JSON.stringify(updates), { headers: this.headers })
+            .put(url, JSON.stringify(updates))
             .toPromise()
             .then(res => this.deserializeTask(res.json()) as Task)
             .catch(this.handleError);
