@@ -1,7 +1,18 @@
 <md-toolbar color='primary' class='mat-elevation-z6'>
-    <a md-button routerLink='/' class='homelink'>AgendaJS</a>
-    <a *ngIf='loginObserver | async' md-button routerLink='/tasks' class='toolbarlink'>Impegni</a>
-    <a *ngIf='loginObserver | async' md-button routerLink='/shoplists' class='toolbarlink'>Liste</a>
+    <span fxHide fxShow.xs>
+		<button md-icon-button [mdMenuTriggerFor]="menu">
+		  <md-icon>more_vert</md-icon>
+		</button>
+		<md-menu #menu="mdMenu">			
+			<a md-menu-item *ngIf='loginObserver | async' routerLink='/tasks'>Impegni</a>
+			<a md-menu-item *ngIf='loginObserver | async' routerLink='/shoplists'>Liste</a>
+		</md-menu>
+	</span>
+	<a md-button routerLink='/' class='homelink'>AgendaJS</a>	
+	<span fxShow fxHide.xs>
+		<a *ngIf='loginObserver | async' md-button routerLink='/tasks' class='toolbarlink'>Impegni</a>
+		<a *ngIf='loginObserver | async' md-button routerLink='/shoplists' class='toolbarlink'>Liste</a>
+	</span>
     <span class='spacer'></span>
-    <a *ngIf='loginObserver | async' color='accent' md-raised-button routerLink='/login'>Logout</a>
+    <a *ngIf='loginObserver | async' color='accent' md-raised-button routerLink='/login'>Logout</a>	
 </md-toolbar>
