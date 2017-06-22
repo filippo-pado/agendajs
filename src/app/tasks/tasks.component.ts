@@ -13,8 +13,8 @@ export class TasksComponent {
     ) {}
 
     tabLinks = [
-        { label: 'Dashboard', link: '.' },
-        { label: 'Tutti', link: 'full-list' }
+        { label: 'Tutti', link: '.' },
+        { label: 'Dashboard', link: '.' }
     ];
     activeLinkIndex = 0;
 }

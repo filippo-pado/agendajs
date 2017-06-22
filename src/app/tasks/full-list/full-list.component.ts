@@ -4,17 +4,20 @@ import { MdSnackBar } from '@angular/material';
 import { Task } from '../shared/task.model';
 import { TaskService } from '../shared/task.service';
 import { TaskUtilsService } from '../shared/task-utils.service';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
     selector: 'full-list',
     templateUrl: './full-list.component.html',
     styleUrls: ['./full-list.component.css']
 })
-export class FullListComponent implements OnInit {    
-    taskForm = { actionToPerform: 'create', task: new Task() };
-    taskLists: any = { 'todo': [], 'done': [] };
+export class FullListComponent implements OnInit {
+    taskForm: Subject < Task > = new Subject < Task > ();
+
     orderField: string = 'description';
     frequencyMap = { 'once': 'Una tantum', 'daily': 'Giornaliero', 'weekly': 'Settimanale', 'monthly': 'Mensile' };
+
+    taskLists: any = { 'todo': [], 'done': [] };
     lists = [
         { title: 'Da fare', list: 'todo' },
         { title: 'Completati', list: 'done' }
@@ -25,22 +28,6 @@ export class FullListComponent implements OnInit {
         private taskUtilsService: TaskUtilsService
     ) {};
     ngOnInit(): void {
-        this.getTasks();
-    };
-    taskUpdated(event: any): void {
-        switch (event.button) {
-            case 'create':
-                this.createTask(event.task);
-                break;
-            case 'update':
-                this.updateTask(event.task);
-                break;
-            case 'cancel':
-                this.resetForm();
-                break;
-        }
-    };
-    getTasks(): void {
         this.taskService
             .getTasks()
             .then(tasks => {
@@ -49,21 +36,22 @@ export class FullListComponent implements OnInit {
                 this.updateLists();
             });
     };
-    createTask(task: Task): void {
-        if (task.description.trim() != '') {
-            this.taskService
-                .create(task)
-                .then(resTask => {
-                    //update lists
-                    this.taskLists['todo'].push(resTask);
-                    this.taskLists['done'].push(resTask);
-                    this.updateLists();
-                    //update form                    
-                    this.resetForm();
-                    //notify user
-                    this.messageBar.open('Impegno creato!', 'OK', { duration: 2000 });
-                });
-        }
+    taskCreated(task: Task): void {
+        //update lists
+        this.taskLists['todo'].push(task);
+        this.taskLists['done'].push(task);
+        this.updateLists();
+        //notify user
+        this.messageBar.open('Impegno: ' + task.description + ', creato!', 'OK', { duration: 2000 });
+    };
+    taskUpdated(task: Task): void {
+        let idx = this.getIndexOfTask(this.taskLists['todo'], task._id);
+        if (idx !== -1) this.taskLists['todo'][idx] = task;
+        idx = this.getIndexOfTask(this.taskLists['done'], task._id);
+        if (idx !== -1) this.taskLists['done'][idx] = task;
+        this.updateLists();
+        //notify user
+        this.messageBar.open('Impegno: ' + task.description + ', modificato!', 'OK', { duration: 2000 });
     };
     deleteTask(task: Task): void {
         this.taskService
@@ -73,29 +61,10 @@ export class FullListComponent implements OnInit {
                 this.taskLists['todo'] = this.taskLists['todo'].filter(t => t !== task);
                 this.taskLists['done'] = this.taskLists['done'].filter(t => t !== task);
                 //update form if needed
-                if (this.taskForm.task._id === task._id)
-                    this.resetForm();
+                this.taskForm.next(null);
                 //notify user
                 this.messageBar.open('Impegno: ' + task.description + ', eliminato!', 'OK', { duration: 2000 });
             });
-    };
-    updateTask(task: Task): void {
-        if (task.description.trim() != '') {
-            this.taskService
-                .update(task._id, task)
-                .then((resTask) => {
-                    //update list
-                    let idx = this.getIndexOfTask(this.taskLists['todo'], resTask._id);
-                    if (idx !== -1) this.taskLists['todo'][idx] = resTask;
-                    idx = this.getIndexOfTask(this.taskLists['done'], resTask._id);
-                    if (idx !== -1) this.taskLists['done'][idx] = resTask;
-                    this.updateLists();
-                    //update form                    
-                    this.resetForm();
-                    //notify user
-                    this.messageBar.open('Impegno modificato!', 'OK', { duration: 2000 });
-                });
-        }
     };
     checkTask(task: Task): void {
         this.taskService
@@ -117,14 +86,6 @@ export class FullListComponent implements OnInit {
                 //notify user
                 this.messageBar.open('Impegno: ' + resTask.description + ', da fare!', 'OK', { duration: 2000 });
             });
-    };
-    resetForm(): void {
-        this.taskForm.actionToPerform = 'create';
-        this.taskForm.task = new Task();
-    };
-    editTask(task: Task): void {
-        this.taskForm.actionToPerform = 'update';
-        this.taskForm.task = Object.assign(new Task(), task);
     };
     private switchList(resTask: Task): void {
         let idx = this.getIndexOfTask(this.taskLists['todo'], resTask._id);

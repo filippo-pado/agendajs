@@ -1,4 +1,4 @@
-<task-form [actionToPerform]="taskForm.actionToPerform" [task]="taskForm.task" (taskUpdated)="taskUpdated($event)">>
+<task-form [taskObserver]="taskForm.asObservable()" (taskUpdated)="taskUpdated($event)" (taskCreated)="taskCreated($event)">
 </task-form>
 <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
     <div fxFlex.gt-sm='50%' *ngFor='let list of lists'>
@@ -6,9 +6,9 @@
             <md-card-content>
                 <h2>{{list.title}}</h2>
                 <div fxLayout="row" class="list-item" *ngFor='let task of taskLists[list.list]'>
-                    <div fxFlex='40px' fxLayoutAlign='base center'>						
+                    <div fxFlex='40px' fxLayoutAlign='base center'>
                         <md-checkbox *ngIf="list.list=='todo'" (click)='checkTask(task)'></md-checkbox>
-						<md-checkbox [checked]="true" *ngIf="list.list=='done'" (click)='uncheckTask(task)'></md-checkbox>
+                        <md-checkbox [checked]="true" *ngIf="list.list=='done'" (click)='uncheckTask(task)'></md-checkbox>
                     </div>
                     <div fxFlex='calc(100%-140px)' fxLayout="column">
                         <div (click)="task.showFull=!task.showFull">
@@ -20,10 +20,10 @@
                         </div>
                     </div>
                     <div fxFlex='80px' fxLayout='row' fxLayoutAlign='base center'>
-                        <button md-icon-button>
+                        <button md-icon-button (click)='taskForm.next(task)'>
                             <md-icon color='primary'>edit</md-icon>
                         </button>
-                        <button md-icon-button>
+                        <button md-icon-button (click)='deleteTask(task)'>
                             <md-icon color='warn'>delete</md-icon>
                         </button>
                     </div>

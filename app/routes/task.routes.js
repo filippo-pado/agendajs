@@ -23,7 +23,7 @@ module.exports = function(apiRoutes) {
         let newTask = req.body;
         newTask.owner = req.member._id;
         Task.create(newTask, function(err, task) {
-            if (err) res.status(500).send(err);
+            if (err) return handleError(res, 500, err);
             res.json(task);
         });
     });
