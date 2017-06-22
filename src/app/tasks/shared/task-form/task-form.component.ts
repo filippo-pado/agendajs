@@ -3,7 +3,6 @@ import { Observable } from 'rxjs/Observable';
 
 import { Task } from '../task.model';
 import { TaskService } from '../task.service';
-import { DashboardComponent } from '../../dashboard/dashboard.component';
 
 @Component({
     selector: 'task-form',
@@ -15,8 +14,8 @@ export class TaskFormComponent implements OnInit {
     @Output() taskUpdated = new EventEmitter();
     @Output() taskCreated = new EventEmitter();
 
-    private task: Task = new Task();
-    private actionToPerform: string = 'create';
+    task: Task = new Task();
+    actionToPerform: string = 'create';
 
     private prioritySlider = {
         max: 3,
