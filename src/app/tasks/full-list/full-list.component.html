@@ -11,20 +11,17 @@
 							<md-checkbox *ngIf="list.list=='todo'" (click)='checkTask(task)'></md-checkbox>
 							<md-checkbox [checked]="true" *ngIf="list.list=='done'" (click)='uncheckTask(task)'></md-checkbox>
 						</div>
-						<div fxFlex='calc(100%-174px)'>
+						<div fxFlex='calc(100%-150px)'>
 							<div *ngIf="!task.showFull" class="description-wrapped description">{{task.description}}</div>
 							<div *ngIf="task.showFull" class="description">{{task.description}}</div>
 						</div>
-						<div fxFlex='110px' fxLayout='row' fxLayoutAlign='space-around center' *ngIf="task.showFull">
-							<button md-mini-fab color='primary' (click)='taskForm.next(task)'>
-								<md-icon>edit</md-icon>
-							</button>
-							<button md-mini-fab color='warn' (click)='deleteTask(task)'>
-								<md-icon>delete</md-icon>
-							</button>
+						<div fxFlex='80px' fxLayout='row' fxLayoutAlign='center center' *ngIf="task.showFull">
+							<md-icon color='primary' class='noselect' (click)='taskForm.next(task)' aria-label="Modifica">edit</md-icon>
+							&nbsp;&nbsp;
+							<md-icon color='warn' class='noselect' (click)='deleteTask(task)' aria-label="Elimina">delete</md-icon>
 						</div>	
-						<button *ngIf="!task.showFull" (click)="task.showFull=!task.showFull" md-icon-button><md-icon>expand_more</md-icon></button>
-						<button *ngIf="task.showFull" (click)="task.showFull=!task.showFull" md-icon-button><md-icon>expand_less</md-icon></button>
+						<md-icon *ngIf="!task.showFull" class='noselect' (click)="task.showFull=!task.showFull">expand_more</md-icon>
+						<md-icon *ngIf="task.showFull" class='noselect' (click)="task.showFull=!task.showFull">expand_less</md-icon>						
 					</div>
 					<div class='date-row' fxFlexOffset='40px'>
 						<md-icon class='date-icon'>assignment</md-icon> {{task.taskDate | date:'yyyy-MM-dd' | frequency: task.frequency}} &nbsp;&nbsp;&nbsp; <span *ngIf='task.doneDate'><md-icon class='date-icon'>assignment_turned_in</md-icon> {{task.doneDate | date:'yyyy-MM-dd'}}</span>
