@@ -23,8 +23,9 @@
 						<md-icon *ngIf="!task.showFull" class='noselect' (click)="task.showFull=!task.showFull">expand_more</md-icon>
 						<md-icon *ngIf="task.showFull" class='noselect' (click)="task.showFull=!task.showFull">expand_less</md-icon>						
 					</div>
-					<div class='date-row' fxFlexOffset='40px'>
-						<md-icon class='date-icon'>assignment</md-icon> {{task.taskDate | date:'yyyy-MM-dd' | frequency: task.frequency}} &nbsp;&nbsp;&nbsp; <span *ngIf='task.doneDate'><md-icon class='date-icon'>assignment_turned_in</md-icon> {{task.doneDate | date:'yyyy-MM-dd'}}</span>
+					<div class='date-row' fxFlexOffset='40px' fxLayout='row'>
+						<span fxFlex='120px'><md-icon class='date-icon'>assignment</md-icon> {{task.taskDate | date:'yyyy-MM-dd' | frequency: task.frequency}}</span>
+						<span fxFlex='120px' *ngIf='task.doneDate'><md-icon class='date-icon'>assignment_turned_in</md-icon> {{task.doneDate | date:'yyyy-MM-dd'}}</span>
 					</div>
 				</div>
             </md-card-content>
