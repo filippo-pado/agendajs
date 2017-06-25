@@ -4,19 +4,17 @@
             <div fxLayoutWrap="nowrap" fxLayoutWrap.lt-md="wrap" fxLayoutAlign="space-around end" fxLayoutGap="20px">
                 <md-input-container fxFlex="grow">
                     <input name='description' type='text' mdInput placeholder='Descrizione impegno' [(ngModel)]="task.description">
-                </md-input-container>
-                <div fxLayout="column" fxLayoutAlign="end center">
-                    <label>Priorità</label>
-                    <div fxLayout="row" fxLayoutAlign="space-around center">
-                        <md-icon>snooze</md-icon>
-                        <md-slider color='primary' name='priority' [max]="prioritySlider.max" [min]="prioritySlider.min" [step]="prioritySlider.step" [(ngModel)]="task.priority" thumbLabel tick-interval></md-slider>
-                        <md-icon>priority_high</md-icon>
-                    </div>
-                </div>
-                <div fxLayout="column" fxLayoutAlign="space-around" class="em-margin-bottom">
-                    <label>Data impegno:</label>
-                    <material-datepicker name='taskDate' [(date)]="task.taskDate"></material-datepicker>
-                </div>
+                </md-input-container>				
+				<md-select name='priority' class="em-margin-bottom" placeholder="Priorità" [(ngModel)]="task.priority">
+                    <md-option *ngFor="let prior of priorityList" [value]="prior.value">
+                        {{prior.viewValue}}
+                    </md-option>
+                </md-select>      
+				<md-input-container>
+				  <input mdInput [mdDatepicker]="picker" placeholder="Data impegno">
+				  <button mdSuffix [mdDatepickerToggle]="picker"></button>
+				</md-input-container>
+				<md-datepicker #picker></md-datepicker>		
                 <md-select name='frequency' class="em-margin-bottom" placeholder="Cadenza" [(ngModel)]="task.frequency">
                     <md-option *ngFor="let freq of frequencyList" [value]="freq.value">
                         {{freq.viewValue}}

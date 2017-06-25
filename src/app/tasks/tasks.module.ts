@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule, MdDatepickerModule, MdNativeDateModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { DatepickerModule } from 'angular2-material-datepicker';
 
 import { TasksComponent } from './tasks.component';
 import { FullListComponent } from './full-list/full-list.component';
@@ -23,8 +22,9 @@ import { FrequencyPipe } from './shared/frequency.pipe'
         FormsModule,
         HttpModule,
         FlexLayoutModule,
-        DatepickerModule,
-        TasksRoutingModule
+        TasksRoutingModule,
+		MdDatepickerModule,
+		MdNativeDateModule
     ],
     declarations: [
         TasksComponent,

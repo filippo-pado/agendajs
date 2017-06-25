@@ -17,13 +17,13 @@ export class TaskFormComponent implements OnInit {
     task: Task = new Task();
     actionToPerform: string = 'create';
 
-    private prioritySlider = {
-        max: 3,
-        min: 1,
-        step: 1
-    };
+    priorityList = [
+        { value: 1, viewValue: 'Bassa' },
+        { value: 2, viewValue: 'Media' },
+        { value: 3, viewValue: 'Alta' }
+    ];
 
-    private frequencyList = [
+    frequencyList = [
         { value: 'once', viewValue: 'Una tantum' },
         { value: 'daily', viewValue: 'Giornaliero' },
         { value: 'weekly', viewValue: 'Settimanale' },
