@@ -9,9 +9,9 @@
                     <md-option *ngFor="let prior of priorityList" [value]="prior.value">
                         {{prior.viewValue}}
                     </md-option>
-                </md-select>      
+                </md-select>     
 				<md-input-container>
-				  <input mdInput [mdDatepicker]="picker" placeholder="Data impegno">
+				  <input mdInput [mdDatepicker]="picker" placeholder="Data impegno" ngModel>
 				  <button mdSuffix [mdDatepickerToggle]="picker"></button>
 				</md-input-container>
 				<md-datepicker #picker></md-datepicker>		

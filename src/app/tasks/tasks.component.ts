@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
+//import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'tasks',
@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     styleUrls: ['./tasks.component.css']
 })
 export class TasksComponent {
-    constructor(
+    /*constructor(
         private router: Router,
         private route: ActivatedRoute
     ) {}
@@ -16,5 +16,5 @@ export class TasksComponent {
         { label: 'Tutti', link: '.' },
         { label: 'Dashboard', link: '.' }
     ];
-    activeLinkIndex = 0;
+    activeLinkIndex = 0;*/
 }
