@@ -1,3 +1,6 @@
 .em-margin-bottom {
     margin-bottom: 1em;
 }
+.formField{
+	min-width: 120px;
+}
