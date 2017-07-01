@@ -7,7 +7,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { TasksComponent } from './tasks.component';
 import { FullListComponent } from './full-list/full-list.component';
-import { TaskFormComponent } from './shared/task-form/task-form.component';
+import { TaskFormComponent } from './task-form/task-form.component';
+import { FilterComponent } from './filter/filter.component';
 import { TaskService } from './shared/task.service';
 import { TaskUtilsService } from './shared/task-utils.service';
 import { UtilsService } from '../shared/utils.service';
@@ -30,6 +31,7 @@ import { FrequencyPipe } from './shared/frequency.pipe'
         TasksComponent,
         FullListComponent,
         TaskFormComponent,
+		FilterComponent,
         FrequencyPipe
     ],
     providers: [TaskService, UtilsService, TaskUtilsService, HttpClientService]

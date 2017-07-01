@@ -13,7 +13,6 @@ import { Subject } from 'rxjs/Subject';
 })
 export class FullListComponent implements OnInit {
     taskForm: Subject < Task > = new Subject < Task > ();
-
     orderField: string = 'description';
     frequencyMap = { 'once': 'Una tantum', 'daily': 'Giornaliero', 'weekly': 'Settimanale', 'monthly': 'Mensile' };
 

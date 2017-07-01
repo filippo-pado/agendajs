@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { Task } from '../task.model';
-import { TaskService } from '../task.service';
+import { Task } from '../shared/task.model';
+import { TaskService } from '../shared/task.service';
 
 @Component({
     selector: 'task-form',

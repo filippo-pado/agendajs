@@ -1,0 +1,41 @@
+<md-card *ngIf="task">
+    <md-card-content>
+		<h2 *ngIf='actionToPerform=="create"'>Nuovo impegno</h2>
+		<h2 *ngIf='actionToPerform=="update"'>Modifica impegno</h2>
+        <form #taskForm="ngForm">
+            <div fxLayoutWrap="wrap" fxLayoutAlign="space-around end" fxLayoutGap="10px">
+                <md-input-container fxFlex="grow">
+                    <input name='description' type='text' mdInput placeholder='Descrizione impegno' [(ngModel)]="task.description">
+                </md-input-container>
+				<div>
+					<md-input-container>
+						<input mdInput [mdDatepicker]="picker" placeholder="Data impegno" name='taskDate' (click)='picker.open()' [(ngModel)]="task.taskDate">
+						<button mdSuffix [mdDatepickerToggle]="picker"></button>
+					</md-input-container>
+					<md-datepicker #picker></md-datepicker>			
+				</div>
+                <md-select name='frequency' class="margined" placeholder="Cadenza" [(ngModel)]="task.frequency">
+                    <md-option *ngFor="let freq of frequencyList" [value]="freq.value">
+                        {{freq.viewValue}}
+                    </md-option>
+                </md-select>	
+				<md-select name='priority' class="margined" placeholder="Priorità" [(ngModel)]="task.priority">
+                    <md-option *ngFor="let prior of priorityList" [value]="prior.value">
+                        {{prior.viewValue}}
+                    </md-option>
+                </md-select>				
+                <div fxLayout="row" fxLayoutGap="10px">
+                    <button *ngIf='actionToPerform=="create"' class="margined" md-mini-fab color='primary' (click)='createTask();' [disabled]="!taskForm.form.valid">
+                        <md-icon>note_add</md-icon>
+                    </button>
+                    <button *ngIf='actionToPerform=="update"' class="margined" md-mini-fab color='primary' (click)='updateTask()' [disabled]="!taskForm.form.valid">
+                        <md-icon>edit</md-icon>
+                    </button>
+                    <button *ngIf='actionToPerform=="update"' class="margined"  md-mini-fab color='warn' (click)='cancelUpdate()'>
+                        <md-icon>cancel</md-icon>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </md-card-content>
+</md-card>

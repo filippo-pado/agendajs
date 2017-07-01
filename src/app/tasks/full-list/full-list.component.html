@@ -1,5 +1,12 @@
-<task-form [taskObserver]="taskForm.asObservable()" (taskUpdated)="taskUpdated($event)" (taskCreated)="taskCreated($event)">
-</task-form>
+<div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+	<div fxFlex.gt-sm='50%'>
+		<task-form [taskObserver]="taskForm.asObservable()" (taskUpdated)="taskUpdated($event)" (taskCreated)="taskCreated($event)">
+		</task-form>
+	</div>
+	<div fxFlex.gt-sm='50%'>
+		<filter></filter>
+	</div>
+</div>
 <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
     <div fxFlex.gt-sm='50%' *ngFor='let list of lists'>
         <md-card>
