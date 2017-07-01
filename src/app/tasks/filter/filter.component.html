@@ -11,26 +11,26 @@
 				<md-input-container fxFlex="grow">
 					<input name='filter-description' type='text' mdInput placeholder='Descrizione impegno' [(ngModel)]="filter.description">
 				</md-input-container>
-				<div>
-					<md-input-container class="formField">
+				<div class="formField">
+					<md-input-container>
 						<input mdInput [mdDatepicker]="filterStartDate" placeholder="Data inizio" name='filter-startDate' (click)='filterStartDate.open()' [(ngModel)]="filter.startDate">						
 						<button mdSuffix [mdDatepickerToggle]="filterStartDate"></button>
 					</md-input-container>
 					<md-datepicker #filterStartDate></md-datepicker>			
 				</div>
-				<div>
+				<div class="formField">
 					<md-input-container>
 						<input mdInput [mdDatepicker]="filterFinishDate" placeholder="Data fine" name='filter-finishDate' (click)='filterFinishDate.open()' [(ngModel)]="filter.finishDate">
 						<button mdSuffix [mdDatepickerToggle]="filterFinishDate"></button>
 					</md-input-container>
 					<md-datepicker #filterFinishDate></md-datepicker>			
 				</div>
-				<md-select name='filter-frequency' class="margined" placeholder="Cadenza" [(ngModel)]="filter.frequency">
+				<md-select name='filter-frequency' class="margined formField" placeholder="Cadenza" [(ngModel)]="filter.frequency">
 					<md-option *ngFor="let freq of frequencyList" [value]="freq.value">
 						{{freq.viewValue}}
 					</md-option>
 				</md-select>	
-				<md-select name='priority' class="margined" placeholder="Priorità" [(ngModel)]="filter.priority">
+				<md-select name='priority' class="margined formField" placeholder="Priorità" [(ngModel)]="filter.priority">
 					<md-option *ngFor="let prior of priorityList" [value]="prior.value">
 						{{prior.viewValue}}
 					</md-option>
