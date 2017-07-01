@@ -2,8 +2,8 @@
 	margin-bottom: 1em;
 }
 .formField{
-	max-width:110px;
-	min-width:110px;
+	max-width:120px;
+	min-width:120px;
 }
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
