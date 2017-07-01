@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./filter.component.css']
 })
 export class FilterComponent implements OnInit {
+	showFull: boolean=true;
     filter: any={};  
 	priorityList = [
         { value: 1, viewValue: 'Bassa' },

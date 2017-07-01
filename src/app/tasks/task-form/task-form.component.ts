@@ -14,6 +14,7 @@ export class TaskFormComponent implements OnInit {
     @Output() taskUpdated = new EventEmitter();
     @Output() taskCreated = new EventEmitter();
 
+	showFull: boolean=true;
     task: Task = new Task();
     actionToPerform: string = 'create';
 
