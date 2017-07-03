@@ -14,11 +14,11 @@
 						<input name='description' type='text' mdInput placeholder='Descrizione impegno' [(ngModel)]="task.description">
 					</md-input-container>
 					<div class="formField">
-						<md-input-container>
+						<md-input-container style='width: 100%'>
 							<input mdInput [mdDatepicker]="picker" placeholder="Data impegno" name='taskDate' (click)='picker.open()' [(ngModel)]="task.taskDate">
 							<button mdSuffix [mdDatepickerToggle]="picker"></button>
 						</md-input-container>
-						<md-datepicker #picker></md-datepicker>			
+						<md-datepicker #picker style='width: 100%'></md-datepicker>			
 					</div>
 					<md-select name='frequency' class="margined formField" placeholder="Cadenza" [(ngModel)]="task.frequency">
 						<md-option *ngFor="let freq of frequencyList" [value]="freq.value">

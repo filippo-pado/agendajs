@@ -1,9 +1,12 @@
 .margined {
 	margin-bottom: 1em;
 }
-.formField{
+.formField {
 	max-width:120px;
 	min-width:120px;
+}
+.formField > * {
+	width: 100%;
 }
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
